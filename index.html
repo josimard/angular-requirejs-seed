@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<!-- 
+	AngularJS + RequireJS project
+	https://github.com/pheno7/angular-requirejs-seed
+	Change all "lang" attributes to change locale, ie: "fr-CA"
+-->
+<!--[if lt IE 7 ]> <html lang="en" class="ie ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html lang="en" class="ie ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html lang="en" class="ie ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html lang="en" class="ie ie9"> <![endif]-->
+<!--[if !IE]><!--> <html lang="en" class="noie"> <!--<![endif]-->
+	<head>
+		<title>AngularJS + RequireJS HTML5 project example</title>
+
+		<!-- Some basic SEO, additional info @ http://www.yearofmoo.com/2012/11/angularjs-and-seo.html -->
+		<meta name="description" content="This is an example of a meta description. This will often show up in search results." />
+		<meta name="author" content="">
+		<meta charset="UTF-8">
+
+		<!-- Using the normalize css of the HTML5 boilerplate, addtional bits @ http://html5boilerplate.com/ -->
+		<link rel="stylesheet" href="app/assets/normalize.css" />
+
+		<!-- Nothing is preventing you from using LESS, SASS, your favorite CSS framework with awesome responsiveness, etc. -->
+        <link rel="stylesheet" href="app/assets/main.css" />
+        
+        <!-- http://modernizr.com/docs/ -->
+        <script src="app/lib/modernizr.js"></script>
+	</head>
+	<body>
+
+		<div id="wrap" class="rounded-shadow">
+
+			<header>
+				<nav id="mainMenu">
+					<a href="#" class="logo"></a>
+					
+					<!-- No menu generation/localization for now -->
+					<ul class="mainMenu">
+						<li><a class="btn btnHome" href="#/home">Home</a></li>
+						<li><a class="btn btnTestPage" href="#/test">Page</a></li>
+						<li><a class="btn btnTestPage" href="#/adressThatDoesNotPointAnywhereReally">404</a></li>
+						<li><a class="btn btnTest" href="#/list/feed1">List 1</a></li>
+						<li><a class="btn btnTest" href="#/list/feed2">List 2</a></li>
+						<li><a class="btn btnTest" href="#/list/listThatDoesNotExists">List 404</a></li>
+					</ul>
+
+					<div class="clearfix"></div>
+				</nav>
+			</header>
+
+			<!-- This will be hidden when the application is loaded -->
+			<section id="splash" class="contentWrap">
+				<!-- You could put SEO indexable content here, some nice graphics nor a loading animation -->
+			</section>
+
+
+			<section id="content" class="contentWrap" ng-view></section>
+
+
+		</div><!-- /#wrap -->
+
+		<footer>
+			That's one happy footer.
+		</footer>
+
+		<!-- http://angularjs.org/ -->
+		<script src="http://code.angularjs.org/1.0.7/angular.min.js"></script>
+
+		<!-- http://requirejs.org/ - will run app/boot.js -->
+		<script data-main="app/boot" src="app/lib/require.js"></script>
+
+
+		<!--[if lt IE 9 ]>
+		<script src="//ajax.googleapis.com/ajax/libs/chrome-frame/1.0.3/CFInstall.min.js"></script>
+		<script>window.attachEvent('onload',function(){CFInstall.check({mode:'overlay'})})</script>
+		<![endif]-->
+	</body>
+</html>
+
+
