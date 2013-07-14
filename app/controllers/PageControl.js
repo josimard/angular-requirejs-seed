@@ -1,10 +1,12 @@
-define(["app/components/Localization"], function (Localization)
+// AMD controller
+define([], function ()
 {
-	function PageControl($scope, $http, $routeParams, $location, Page)
+	function PageControl($scope, $http, Routing, Localization)
 	{
+		var context = this;
 		var model = {
 			// Set name from url param or defaults to path
-			name: ($routeParams.name) ? $routeParams.name : $location.path().replace("/","") 
+			name: (Routing.params.name) ? Routing.params.name :  Routing.location.path().replace("/","") 
 		};
 
 		function init()
@@ -13,48 +15,28 @@ define(["app/components/Localization"], function (Localization)
 			// Content is from i18n locales file in app/nls/locales for now, but could come from a JSON service as demonstrated in ListControl.js
 			model.locales = Localization.locales[model.name];
 
-			// Home only component example
-			if(model.name=="home")
-			{
-				initHome();
-			}
 			// Display 404 when content/locales does not exists
-			else if(!model.locales)
+			if(!model.locales)
 			{
 				model.name = "404";
 				model.locales = Localization.locales[model.name];
 			}
 
 			// Set page title
-			Page.title(model.locales.title);
+			Routing.pageTitle(model.locales.title);
 			
 			// Assign model to Angular scope
 			$scope.model = model;
 		}
 
-		function initHome()
-		{
-			// Example use of a component not using AngularJS and still playing nice in the application context
-			// Get the component class with RequireJS
-			require(["app/components/Readme"], function (Readme)
-			{
-				// Instanciate the component
-				var readme = new Readme();
-				readme.init(
-				{
-					element:"#Readme", 
-					readme: {
-						'owner': 'pheno7',
-						'repo':  'angular-requirejs-seed'
-					}
-				});
-			});
-		}
-
 		// Auto-init
 		init();
 
-		return this;
+		// Public
+		// When using methods/properties of their own scope, you can expose them as public methods of this instance this way
+		context.model = model;
+
+		return context;
 	}
 
 	return PageControl;

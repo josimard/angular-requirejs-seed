@@ -1,93 +1,54 @@
 'use strict';
-define(['angular', "app/components/Localization" ], 
-function (angular, Localization)
+define(['angular', "models/Localization", "routing"], 
+function (angular, Localization, Routing)
 {
 	var moduleName = "app";
 	var module;
+	var routing;
 	
-	function init()
+	/**
+	* Initialize the application as a AngularJS module
+	*/
+	function init(angularConfig)
 	{
-		// Load/initialize the localization component first (give the chance to load data if necessary)
-		Localization.init(function()
+		// Get all controllers from configuration, AMD or not
+		require(angularConfig.controllers, function ()
 		{
-			// Can now init application
-			initAngular();
+			// AngularJS Module
+			module = angular.module(moduleName, []);
 
-			// Hide the splash screen
-			document.getElementById('splash').style.visibility = 'hidden'; 
-		});
-	}
-
-	function initAngular()
-	{
-		// Get all application-wide required controllers here to avoid making a component clutter at the top of this script
-		require(["app/controllers/PageControl", "app/controllers/ListControl"], 
-		function (PageControl, ListControl)
-		{
-			// Getting all those AMD modules should be quick-as if you are using the require.js optimizer
-			// Check boot.js to see how to link against a combined version of all AMD modules
-			// @see http://requirejs.org/docs/optimization.html
-
-			// App Module
-			module = angular.module(moduleName, []).
-				config(function($routeProvider, $locationProvider)
-				{
-					// You can set the urls to hashbang ajax urls with $locationProvider, but all your adresses will need to be prefixed with "!" ie "#!/home/"
-					// More info @ https://developers.google.com/webmasters/ajax-crawling/docs/faq
-					//$locationProvider.html5Mode(false).hashPrefix('!');
-
-					// Setup routes directly here for the sake of simplicity
-					$routeProvider.
-						// Generic page getter (will handle 404)
-						when('/p/:name', {templateUrl: 'app/templates/page.html', controller: PageControl}).
-						// Specific template for home (and re-using PageControl)
-						when('/home', {templateUrl: 'app/templates/home.html', controller: PageControl}).
-						// Call to a list
-						when('/list/:name', {templateUrl: 'app/templates/list.html', controller: ListControl}).
-
-						// Handle other url queries
-						otherwise({redirectTo: function(routeParams, path, search)
-						{
-							// Home path
-							if(path=="/" || path=="") return "/home";
-							// Redirect to PageControl
-							var newPath = (path.indexOf("/p") !=0) ? "/p"+path : path;
-							// Not compatible with page controller, use as a query
-							if(newPath.split("/").length>3) {
-								newPath = "/p/404?r="+path;
-							}
-							return newPath;
-						}
-				});
-			});
-
-			// Inline Page service
-			module.factory('Page', function()
+			// Register AMD controllers from configuration
+			for(var i=0; i<arguments.length; i++)
 			{
-				var defaultTitle = document.title;
-				// You can create a more compact title here
-				var partialTitle = document.title;
-				var title = defaultTitle;
-				return {
-					// Set pages title, keeping the original title on the right
-					title: function(value) {
-						if(value){
-							title = value+" | "+partialTitle;
-							document.title = title;
-						}
-						return title;
-					},
-					setDefaultTitle: function() {
-						return this.title(defaultTitle);
-					}
-				};
+				var controllerName = angularConfig.controllers[i];
+				controllerName = controllerName.substring(controllerName.lastIndexOf("/")+1, controllerName.length);
+				if(arguments[i]) module.controller(controllerName, arguments[i]);
+			}
+
+			// Create our Routing module that will register itself as a AngularJS provider
+			routing = new Routing(module);
+
+			module.config(function($routeProvider, $locationProvider)
+			{
+				// Handling routes in the routing component
+				routing.init($routeProvider, $locationProvider);
 			});
+
+			// Set the localization model as a injectable
+			module.factory('Localization', function() {return Localization;});
 
 			// Start angular JS boostrap
 			angular.bootstrap(document.body, [moduleName]);
-		});
-	};
 
+			onAppReady();
+		});
+	}
+
+	function onAppReady()
+	{
+		// Hide the splash screen
+		document.getElementById('splash').style.visibility = 'hidden'; 
+	};
 
 	// Public API
 	return {

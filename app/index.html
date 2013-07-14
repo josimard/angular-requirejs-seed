@@ -18,13 +18,13 @@
 		<meta charset="UTF-8">
 
 		<!-- Using the normalize css of the HTML5 boilerplate, addtional bits @ http://html5boilerplate.com/ -->
-		<link rel="stylesheet" href="app/assets/normalize.css" />
+		<link rel="stylesheet" href="assets/normalize.css" />
 
 		<!-- Nothing is preventing you from using LESS, SASS, your favorite CSS framework with awesome responsiveness, etc. -->
-        <link rel="stylesheet" href="app/assets/main.css" />
+        <link rel="stylesheet" href="assets/main.css" />
         
         <!-- http://modernizr.com/docs/ -->
-        <script src="app/lib/modernizr.js"></script>
+        <script src="lib/modernizr.js"></script>
 	</head>
 	<body>
 
@@ -36,12 +36,12 @@
 					
 					<!-- No menu generation/localization for now -->
 					<ul class="mainMenu">
-						<li><a class="btn btnHome" href="#/home">Home</a></li>
-						<li><a class="btn btnTestPage" href="#/test">Page</a></li>
-						<li><a class="btn btnTestPage" href="#/adressThatDoesNotPointAnywhereReally">404</a></li>
-						<li><a class="btn btnTest" href="#/list/feed1">List 1</a></li>
-						<li><a class="btn btnTest" href="#/list/feed2">List 2</a></li>
-						<li><a class="btn btnTest" href="#/list/listThatDoesNotExists">List 404</a></li>
+						<li><a class="btn btnHome" href="#/en/home">Home</a></li>
+						<li><a class="btn btnTestPage" href="#/en/test">Page</a></li>
+						<li><a class="btn btnTestPage" href="#/en/adressThatDoesNotPointAnywhereReally">404</a></li>
+						<li><a class="btn btnTest" href="#/en/list/feed1">List 1</a></li>
+						<li><a class="btn btnTest" href="#/en/list/feed2">List 2</a></li>
+						<li><a class="btn btnTest" href="#/en/list/listThatDoesNotExists">List 404</a></li>
 					</ul>
 
 					<div class="clearfix"></div>
@@ -63,11 +63,8 @@
 			That's one happy footer.
 		</footer>
 
-		<!-- http://angularjs.org/ -->
-		<script src="http://code.angularjs.org/1.0.7/angular.min.js"></script>
-
-		<!-- http://requirejs.org/ - will run app/boot.js -->
-		<script data-main="app/boot" src="app/lib/require.js"></script>
+		<!-- http://requirejs.org/ - will run boot.js -->
+		<script data-main="boot" src="lib/require.js"></script>
 
 
 		<!--[if lt IE 9 ]>
