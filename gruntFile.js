@@ -11,6 +11,8 @@ module.exports = function(grunt){
   	var rootFile = "./app/app";
   	var destFile = "app/app.min.js";
 
+  	var buildDest = "./dist";
+
 	// Will get the app configuration and inject controller shims for the RequireJS optimizer
 	var config = angularRequireUtils.getConfig(rootFile, destFile, './app/config.js');
 
@@ -40,7 +42,25 @@ module.exports = function(grunt){
 			dist: {
 				files: {"app/app.min.js": [destFile] }
 			}
-		}
+		},
+
+		// Copy build
+		// https://github.com/gruntjs/grunt-contrib-copy
+		copy: {
+			main: {
+				files: [
+					//{expand: true, src: ['app/**'], dest: 'dist/', filter: 'isFile'},
+					{expand: true, src: ['app/index.html'], dest: buildDest},
+					{expand: true, src: ['app/boot.js'], dest: buildDest},
+					{expand: true, src: ['app/app.min.js'], dest: buildDest},
+					{expand: true, src: ['app/config.js'], dest: buildDest},
+					{expand: true, src: ['app/assets/**'], dest: buildDest},
+					{expand: true, src: ['app/lib/**'], dest: buildDest},
+					{expand: true, src: ['app/nls/**'], dest: buildDest},
+					{expand: true, src: ['app/views/templates/**'], dest: buildDest}
+				]
+			}
+        },
 	});
 
 	// Load tasks from "grunt-sample" grunt plugin installed via Npm.
@@ -49,7 +69,10 @@ module.exports = function(grunt){
 	// Load tasks from "grunt-sample" grunt plugin installed via Npm.
 	grunt.loadNpmTasks('grunt-contrib-uglify');
 
+	// Copy
+	grunt.loadNpmTasks('grunt-contrib-copy');
+
 	// Default task.
-	grunt.registerTask('default', ["requirejs", "uglify"]); // 
+	grunt.registerTask('default', ["requirejs", "uglify", "copy"]); // 
 
 };

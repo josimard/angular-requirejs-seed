@@ -4,21 +4,24 @@
 require(["config"], function (config)
 {
 	// Link against minified version:
-	//config.require.paths.app = "app.min";
+	config.require.paths.app = "app.min";
 
 	// Configure RequireJS
 	require.config(config.require);
 
 	// Boot procedure
-	require(["models/Localization", "app"], function (Localization, app)
+	require(["app"], function (app)
 	{
 		console.log("Booting application...");
 
-		// Load/initialize the localization component first (give the chance to load data if necessary)
-		Localization.init(function()
+		// Load/initialize localization first and give it the chance to load data if necessary
+		require(["models/Localization"], function (Localization)
 		{
-			// Start application 
-			app.init(config.angular);
+			Localization.init(function()
+			{
+				// Start application 
+				app.init(config.angular);
+			});
 		});
 	});
 });
