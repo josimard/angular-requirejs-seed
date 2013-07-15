@@ -7,7 +7,7 @@ define([], {
 			"controllers/PageControl",
 			"controllers/HomeControl",
 
-			// Define global scope controllers after
+			// Global scope controllers can be used, but must be listed after AMD ones
 			"controllers/ListControl"
 		]
 	},
@@ -15,7 +15,6 @@ define([], {
 	// RequireJS configuration
 	require: {
 		baseUrl:"./",
-
 		paths:{
 			"angular":"http://code.angularjs.org/1.0.7/angular.min",
 			"angular-ressource": "http://code.angularjs.org/1.0.7/angular-resource.min",

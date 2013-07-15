@@ -1,9 +1,12 @@
 "use strict";
 
-// Load configuration file to configure require first
+// First, let's load configuration file to configure RequireJS
 require(["config"], function (config)
 {
-	// Require JS configuration
+	// Link against minified version:
+	//config.require.paths.app = "app.min";
+
+	// Configure RequireJS
 	require.config(config.require);
 
 	// Boot procedure

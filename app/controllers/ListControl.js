@@ -1,4 +1,6 @@
 // Global scope controller example (More polluting and less flexible, see PageControl for AMD controller example)
+// The ngInject comment is to allow Gruntfile.js to identify injection methods and generate $inject rules for the AngularJS injector
+/** @ngInject */
 function ListControl($scope, $http, Routing, Localization)
 {
 	// Create instance settings

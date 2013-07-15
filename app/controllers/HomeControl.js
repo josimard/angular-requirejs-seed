@@ -1,14 +1,14 @@
 define(["angular", "jquery", "controllers/PageControl"], function (angular, jQuery, PageControl)
 {
-	// Class
+	/** @ngInject */
 	function HomeControl($scope, $http, Routing, Localization)
 	{
 		var context = this;
 
-		// Set routing param name to home
+		// Set routing param name for PageControl
 		Routing.params.name = "home";
 
-		// Uber-simple inheritance from PageControl
+		// Uber-simple inheritance
 		var _super = new PageControl($scope, $http, Routing, Localization);
 		angular.extend(context, _super);
 
@@ -38,17 +38,17 @@ define(["angular", "jquery", "controllers/PageControl"], function (angular, jQue
 
 	// Static scope
 	// Example to load additional libraries at runtime when only specific to one place in the application
-	var isLibrariesLoaded = false;
+	var _LibrariesLoaded = false;
 	function loadLibraries(onComplete)
 	{
-		if(isLibrariesLoaded) { onComplete(); return; }
+		if(_LibrariesLoaded) { onComplete(); return; }
 
 		// Using modernizr included yepnope to inject JS libraries at runtime - http://modernizr.com/download/ + http://yepnopejs.com/
 		yepnope({
 			// Using raw.github url for demonstration purposes only, never do that on a production app since the code could change and break your app, or github could block your server IP
 			both: ["https://raw.github.com/thomasklemm/Readme.js/master/readme.js"],
 			complete: function() {
-				isLibrariesLoaded = true;
+				_LibrariesLoaded = true;
 				onComplete();
 			}
 		});

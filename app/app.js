@@ -28,11 +28,11 @@ function (angular, Localization, Routing)
 			// Create our Routing module that will register itself as a AngularJS provider
 			routing = new Routing(module);
 
-			module.config(function($routeProvider, $locationProvider)
+			module.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider)
 			{
 				// Handling routes in the routing component
 				routing.init($routeProvider, $locationProvider);
-			});
+			}]);
 
 			// Set the localization model as a injectable
 			module.factory('Localization', function() {return Localization;});

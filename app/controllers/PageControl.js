@@ -1,6 +1,7 @@
 // AMD controller
 define([], function ()
 {
+	/** @ngInject */
 	function PageControl($scope, $http, Routing, Localization)
 	{
 		var context = this;

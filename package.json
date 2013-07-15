@@ -1,0 +1,10 @@
+{
+  "name": "AngularJS + RequireJS project seed",
+  "version": "0.0.1",
+  "private": true,
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-requirejs": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.2"
+  }
+}

@@ -13,13 +13,13 @@ function (angular, Localization)
 		var title = defaultTitle;
 
 		// Register as angular provider
-		angularModule.factory('Routing', function onAngularProviderRequest($location, $routeParams)
+		angularModule.factory('Routing', ['$location', '$routeParams', function($location, $routeParams)
 		{
 			// Self-assign injectables for public availability
 			context.location = $location;
 			context.params = $routeParams;
 			return context;
-		});
+		}]);
 
 		function init($routeProvider, $locationProvider)
 		{
