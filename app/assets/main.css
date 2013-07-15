@@ -1,9 +1,9 @@
 html{
-	min-width: 960px;
+  min-width: 960px;
 }
 
 body{
-	
+  
 }
 
 #wrap {
@@ -13,7 +13,7 @@ body{
 
 
 /*-------------------------
-	Header Styles
+  Header Styles
 --------------------------*/
 
 header {
@@ -44,8 +44,8 @@ header .logo {
 
     #mainMenu h1{
         float:left;
-    	text-align: left;
-    	font-weight: bold;
+      text-align: left;
+      font-weight: bold;
         margin:0;
         padding: 20px 0 0 0;
     }
@@ -145,16 +145,16 @@ input.btn.disabled, input.btn.disabled:hover {
 
 
 /*-------------------------
-	MISC
+  MISC
 --------------------------*/
 
 
 .transition {
-	-webkit-transition: all 0.1s ease-out;
-	-moz-transition: all 0.1s ease-out;
-	-ms-transition: all 0.1s ease-out;
-	-o-transition: all 0.1s ease-out;
-	transition: all 0.1s ease-out;
+  -webkit-transition: all 0.1s ease-out;
+  -moz-transition: all 0.1s ease-out;
+  -ms-transition: all 0.1s ease-out;
+  -o-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
 }
 
 .rounded-shadow

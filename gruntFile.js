@@ -1,9 +1,9 @@
 /*global module*/ 
-module.exports = function(grunt){
+module.exports = function(grunt) {
 'use strict';
 
-	// Custom utilities to ease the mix of AngularJS, AMD modules, the requireJS optimizer and UglifyJS
-	var angularRequireUtils = require('./scripts/AngularRequireUtils');
+	// Custom utilities to ease the mix of AngularJS, the RequireJS optimizer and UglifyJS
+	var buildUtils = require('./scripts/build-utils');
 
 	// lodash
 	var _ = grunt.util._
@@ -14,10 +14,11 @@ module.exports = function(grunt){
   	var buildDest = "./dist";
 
 	// Will get the app configuration and inject controller shims for the RequireJS optimizer
-	var config = angularRequireUtils.getConfig(rootFile, destFile, './app/config.js');
+	var config = buildUtils.getConfig(rootFile, destFile, './app/config.js');
 
 	// Grunt configuration
-	grunt.initConfig({
+	grunt.initConfig(
+	{
 		pkg: grunt.file.readJSON('package.json'),
 
 		// RequireJS Optimizer
@@ -63,16 +64,12 @@ module.exports = function(grunt){
         },
 	});
 
-	// Load tasks from "grunt-sample" grunt plugin installed via Npm.
+	// Grunt plugins
 	grunt.loadNpmTasks('grunt-contrib-requirejs');
-
-	// Load tasks from "grunt-sample" grunt plugin installed via Npm.
 	grunt.loadNpmTasks('grunt-contrib-uglify');
-
-	// Copy
 	grunt.loadNpmTasks('grunt-contrib-copy');
 
-	// Default task.
-	grunt.registerTask('default', ["requirejs", "uglify", "copy"]); // 
+	// Register Default task.
+	grunt.registerTask('default', ["requirejs", "uglify", "copy"]);
 
 };
