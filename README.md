@@ -53,7 +53,7 @@ To wire controllers in this rig it's a piece of cake:
 			]
 		}
 
-- Use a string in your [routes](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/routing.js) instead of linking with the functions directly:
+- Use a string in your [routes](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/js/routing.js) instead of linking with the functions directly:
 
 		$routeProvider.when('path', {templateUrl: 'templates/yeah.html', controller: "MyControl"});
 
