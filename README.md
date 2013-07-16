@@ -5,11 +5,12 @@ AngularJS + RequireJS HTML5 project example, could easily be used as a boilerpla
 
 ## Why?
 
-- Because AMD modules are great for code re-usability and scalabilty
+- Because AMD modules are great for code re-usability and application scalabilty
 - Because we like browser errors like "syntaxError: missing X on ListControl.js (line 56, col 2)"
 - Because AngularJS is great, but we want to use jQuery plugins and awesome HTML5 libraries.
 This application demonstrates the freedom you can get while staying organized.
-- Because we don't want to add a <script> tag for each controller, see [config.js](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/config.js).
+- Because we don't want to add a script tag for each controller nor manually manage js files, see [config.js](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/config.js).
+- Because the [RequireJS Optimizer](http://requirejs.org/docs/optimization.html) is our friend when it's time to make that build.
 
 ##Installation
 
@@ -30,7 +31,7 @@ To install the latest Grunt depencencies with [install-latest.sh](https://github
 ##Building the project
 To generate an optimized build, use Grunt as usual or run [build.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/build.sh).
 
-Keep in mind that no build tool or build watcher is necessary to develop and debug your application. Simply open [app/index.html](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/index.html) in a browser and experience coding comfort. Thanks to RequireJS.
+Keep in mind that no build tool or build watcher is necessary to develop and debug your application. Simply open [app/index.html](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/index.html) in a browser and experience coding comfort. Thanks to [RequireJS](http://requirejs.org/).
 
 By default a "./dist" folder will be generated with a minified and obfuscated version of your code and only the necessary files to serve over HTTP. Feel free to modify the [Gruntfile.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/Gruntfile.js) to suit your needs.
 
