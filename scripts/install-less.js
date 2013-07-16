@@ -58,6 +58,8 @@ function execute()
 			console.log("stderr : "+stderr);
 		}
 	});
+
+	console.log("LESS embeded sucessfully");
 }
 
 function replaceInFile(file,regexOrString,to)

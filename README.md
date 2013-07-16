@@ -5,10 +5,11 @@ AngularJS + RequireJS HTML5 project example, could easily be used as a boilerpla
 
 ## Why?
 
-- Because AMD modules are great for re-usability and scalabilty
+- Because AMD modules are great for code re-usability and scalabilty
 - Because we like browser errors like "syntaxError: missing X on ListControl.js (line 56, col 2)"
-- Because AngularJS is great, but we want the choice to use jQuery plugins and awesome HTML5 libraries.
+- Because AngularJS is great, but we want to use jQuery plugins and awesome HTML5 libraries.
 This application demonstrates the freedom you can get while staying organized.
+- Because we don't want to add a <script> tag for each controller, see [config.js](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/config.js).
 
 ##Installation
 
@@ -16,7 +17,7 @@ A first-time installation is necessary to get [Grunt](http://gruntjs.com/) and i
 
     $ npm install
 
-To install the latest Grunt and plugins:
+To install the latest Grunt depencencies with [install-latest.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/install-latest.sh)
   
     $ npm install grunt-cli -g
     $ npm install grunt --save-dev
@@ -24,10 +25,10 @@ To install the latest Grunt and plugins:
     $ npm install grunt-contrib-uglify --save-dev
     $ npm install grunt-contrib-copy --save-dev
 
+- Tip: On windows, you can run easily run shell scripts (.sh files) by double-clicking when you install [Git Bash](http://git-scm.com/downloads) shipped with Git.
+
 ##Building the project
 To generate an optimized build, use Grunt as usual or run [build.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/build.sh).
-
-- Tip: On windows, you can double-click shell scripts (.sh files) and run them when you install [Git Bash](http://git-scm.com/downloads) shipped with Git.
 
 Keep in mind that no build tool or build watcher is necessary to develop and debug your application. Simply open [app/index.html](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/index.html) in a browser and experience coding comfort. Thanks to RequireJS.
 
