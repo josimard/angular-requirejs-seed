@@ -1,5 +1,5 @@
 'use strict';
-define(['angular', "models/Localization", "routing"], 
+define(['angular', "js/services/Localization", "js/routing"], 
 function (angular, Localization, Routing)
 {
 	var moduleName = "app";
@@ -11,13 +11,13 @@ function (angular, Localization, Routing)
 	*/
 	function init(angularConfig)
 	{
+		// AngularJS Module
+		module = angular.module(moduleName, []);
+
 		// Get all controllers from configuration, AMD or not
 		require(angularConfig.controllers, function ()
 		{
-			// AngularJS Module
-			module = angular.module(moduleName, []);
-
-			// Register AMD controllers from configuration
+			// Register controllers from config
 			for(var i=0; i<arguments.length; i++)
 			{
 				var controllerName = angularConfig.controllers[i];
@@ -28,13 +28,14 @@ function (angular, Localization, Routing)
 			// Create our Routing module that will register itself as a AngularJS provider
 			routing = new Routing(module);
 
+			// Configure module
 			module.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider)
 			{
 				// Handling routes in the routing component
 				routing.init($routeProvider, $locationProvider);
 			}]);
 
-			// Set the localization model as a injectable
+			// Set the Localization component as an AngularJS service
 			module.factory('Localization', function() {return Localization;});
 
 			// Start angular JS boostrap

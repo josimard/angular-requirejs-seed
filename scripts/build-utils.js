@@ -1,29 +1,43 @@
-/* NodeJS module */
+/* NodeJS module public API */
 module.exports = {
+	init:init,
 	shim: configureRequireShims,
 	fillInjectionRules: fillInjectionRules,
-	getConfig: getConfig
+	getConfig: getConfig,
+	replaceInFile: replaceInFile,
+	createCustomizeTask: createCustomizeTask
 }
 
-var grunt = require("grunt");
+// Node JS modules
 
-// lodash
-var _ = grunt.util._
+/**
+ * FileSystem
+ * http://nodejs.org/api/fs.html
+ */ 
+var fs = require('fs');
 
+// RequireJS
 var requirejs = require('grunt-contrib-requirejs/node_modules/requirejs'); // ../node_modules/
+
+// Grunt
+var grunt;
+var _; // lodash
+
+function init(gruntInstance)
+{
+	grunt = gruntInstance;
+	_ = grunt.util._; // lodash
+}
 
 /**
 * Get AMD wrapped configuration and prepare for grunt tasks and minifications
 */
-function getConfig(rootFile, destFile, configPath)
+function getConfig(baseUrl, destFile, configPath)
 {
-	// Add AngularJS controllers and such to the require.js shims
-	var config = requirejs(configPath) // we load the r.js config
+	if(!configPath) configPath = baseUrl+"/config.js";
 
-	var baseUrl = rootFile.substring(0,rootFile.lastIndexOf("/"));
-	var requireName = rootFile.substring(rootFile.lastIndexOf("/")+1,rootFile.length);
-
-	configureRequireShims(config);
+	// Load app public config
+	var config = requirejs(configPath);
 
 	// RequireJS optimizer options
 	// See example @ https://github.com/jrburke/r.js/blob/master/build/example.build.js
@@ -33,17 +47,24 @@ function getConfig(rootFile, destFile, configPath)
 		findNestedDependencies: true,
 		preserveLicenseComments: false,
 		baseUrl: baseUrl,
-		name: requireName,
+		//name: main,
 		optimize: 'none', // Not using the optimizer at this stage yet
 		// Using method to make some pre-minifications modifications
 		out: function(text)
 		{
 			// Fill Angular injection rules to avoid mangling issues with minification and AngularJS
 			text = fillInjectionRules(text);
-
+			console.log(destFile)
 			grunt.file.write(destFile, text);
 		}
 	});
+
+	// Add AngularJS controllers and such to the require.js shims
+	configureRequireShims(config);
+
+	console.log("Require shims for app name '"+config.require.name+"': \n");
+	console.log(config.require.shim);
+	console.log("\n");
 
 	return config;
 }
@@ -52,14 +73,14 @@ function configureRequireShims(config)
 {
 	// Prepare base shims
 	var requireShim = (config.require.shim) ? config.require.shim : {};
-	if(!requireShim.app) requireShim.app = [];
+	if(!requireShim[config.require.name]) requireShim[config.require.name] = [];
 
 	// AngularJS shims
 	if(config.angular)
 	{
 		for (var i in config.angular.controllers)
 		{
-			requireShim.app.push(config.angular.controllers[i]);
+			requireShim[config.require.name].push(config.angular.controllers[i]);
 		}
 	}
 
@@ -68,7 +89,7 @@ function configureRequireShims(config)
 
 /**
 * Fill Angular injection rules to avoid mangling issues with minification and AngularJS
-* To flag methods for injection, simply add the following comment before a function declaration: */
+* To flag methods for injection, simply add the following comment before the function declaration: */
 /** @ngInject */ 
 function fillInjectionRules(text)
 {
@@ -88,4 +109,25 @@ function fillInjectionRules(text)
 	});
 
 	return text;
+}
+
+function createCustomizeTask(taskList)
+{
+	grunt.registerTask('customize', 'Build customization', function()
+	{
+		// https://github.com/gruntjs/grunt/wiki/grunt.config
+		grunt.config.requires('customize.run');
+		var runFunc = grunt.config('customize.run');
+		runFunc();
+	});
+	taskList.push("customize");
+	return taskList;
+}
+
+function replaceInFile(file,regexOrString,to)
+{
+	// https://github.com/gruntjs/grunt/wiki/grunt.file
+	var text = grunt.file.read(file);
+	text = text.replace(regexOrString, to);
+	grunt.file.write(file, text);
 }

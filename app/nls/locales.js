@@ -41,7 +41,7 @@ define( {
 
 	"404": {
 		"title": "404 Not found",
-		"content": '<p>Sorry, we could not find this page</p><p><a href="#/home">Return home</a></p>'
+		"content": '<p>Sorry, we could not find this page</p><p><a href="#/">Return home</a></p>'
 	}
 }
 // JSON Ends Here <<<

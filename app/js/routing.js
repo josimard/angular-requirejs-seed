@@ -1,10 +1,13 @@
 /**
-* Instantiable routing component to configure angular routes, handle route localization, set page title, etc.
+* Instantiable routing component and AngularJS service to:
+* - configure angular routes
+* - handle route localization
+* - set page title, etc.
 */
-define(["angular","models/Localization"], 
+define(["angular","js/services/Localization"], 
 function (angular, Localization)
 {
-	// Instantiable Component Class
+	// Class
 	function Routing(angularModule, settings)
 	{
 		var context = this;
@@ -27,16 +30,18 @@ function (angular, Localization)
 			// More info @ https://developers.google.com/webmasters/ajax-crawling/docs/faq
 			if(routePrefix=="!/") $locationProvider.html5Mode(false).hashPrefix('!');
 
-			// Setup routes directly here for the sake of simplicity
+			// Setup routes here 
+			// Verify your templates accessibility if you receive a similar error:
+			// "[Exception... "Access to restricted URI denied"  code: "1012" ..."
 			$routeProvider.
 				// Specific template for home (and re-using PageControl)
-				when(routePrefix+':lang/home', {templateUrl: 'views/templates/home.html', controller: "HomeControl"}).
+				when(routePrefix+':lang/home', {templateUrl: 'templates/home.html', controller: "HomeControl"}).
 
 				// Call to a list"
-				when(routePrefix+':lang/list/:name', {templateUrl: 'views/templates/list.html', controller: "ListControl"}).
+				when(routePrefix+':lang/list/:name', {templateUrl: 'templates/list.html', controller: "ListControl"}).
 
 				// Lastly, a generic page getter (should handle 404 when no content is found)
-				when(routePrefix+':lang/:name', {templateUrl: 'views/templates/page.html', controller: "PageControl"}).
+				when(routePrefix+':lang/:name', {templateUrl: 'templates/page.html', controller: "PageControl"}).
 
 				// Handle other url queries
 				otherwise({redirectTo: function(routeParams, path, search)

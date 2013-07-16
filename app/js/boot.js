@@ -1,21 +1,21 @@
-"use strict";
-
 // First, let's load configuration file to configure RequireJS
+require.config({baseUrl:"./"});
 require(["config"], function (config)
 {
+	"use strict";
 	// Link against minified version:
-	config.require.paths.app = "app.min";
+	//config.require.paths["js/app"] = "js/app.min";
 
 	// Configure RequireJS
 	require.config(config.require);
 
 	// Boot procedure
-	require(["app"], function (app)
+	require(["js/app"], function (app)
 	{
 		console.log("Booting application...");
 
 		// Load/initialize localization first and give it the chance to load data if necessary
-		require(["models/Localization"], function (Localization)
+		require(["js/services/Localization"], function (Localization)
 		{
 			Localization.init(function()
 			{
