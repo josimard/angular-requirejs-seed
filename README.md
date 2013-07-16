@@ -37,12 +37,18 @@ By default a "./dist" folder will be generated with a minified and obfuscated ve
 
 It's up to you really, but since I like [LESS](http://lesscss.org/), I included the necessary to get you up and running easily:
 
-- You can setup LESS for this project running [install-less.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/install-less.sh).
-- There is also a lightweight LESS watching script to transform your LESS to CSS on the fly. You can start it running [watch-less.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/watch-less.sh).
+You can setup LESS for this project running [install-less.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/install-less.sh).
+
+    $ npm install grunt-contrib-less --save-dev
+    $ node scripts/install-less.js
+
+There is also a lightweight LESS watching script to transform your LESS to CSS on the fly. You can start it running [watch-less.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/watch-less.sh).
+
+    $ node scripts/watch-less.js
 
 ## What else?
 
-Tons of goodies and good practices for overall productivity, code maintanability, ease-of-debugging and most of all keeping it simple as possible.
+Good practices for overall productivity, code maintanability, ease-of-debugging and most of all keeping it simple as possible but ready for scaling.
 
 - Localization using the [RequireJS i18n plugin](https://github.com/requirejs/i18n) for it's simplicity, see the [Localization](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/models/Localization.js) model.
 - [Dynamic routing](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/routing.js) to handle more cases, flexibility, route localization and page title changes.
