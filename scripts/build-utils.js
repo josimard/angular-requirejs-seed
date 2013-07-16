@@ -2,7 +2,7 @@
 module.exports = {
 	init:init,
 	shim: configureRequireShims,
-	fillInjectionRules: fillInjectionRules,
+	angularPass: angularPass,
 	getConfig: getConfig,
 	replaceInFile: replaceInFile,
 	createCustomizeTask: createCustomizeTask
@@ -48,15 +48,7 @@ function getConfig(baseUrl, destFile, configPath)
 		preserveLicenseComments: false,
 		baseUrl: baseUrl,
 		//name: main,
-		optimize: 'none', // Not using the optimizer at this stage yet
-		// Using method to make some pre-minifications modifications
-		out: function(text)
-		{
-			// Fill Angular injection rules to avoid mangling issues with minification and AngularJS
-			text = fillInjectionRules(text);
-			console.log(destFile)
-			grunt.file.write(destFile, text);
-		}
+		optimize: 'none' // Not using the optimizer at this stage yet
 	});
 
 	// Add AngularJS controllers and such to the require.js shims
@@ -89,9 +81,11 @@ function configureRequireShims(config)
 
 /**
 * Fill Angular injection rules to avoid mangling issues with minification and AngularJS
-* To flag methods for injection, simply add the following comment before the function declaration: */
+* @see http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java
+* */
+// To flag methods for injection, simply add the following comment before the function declaration:
 /** @ngInject */ 
-function fillInjectionRules(text)
+function angularPass(text)
 {
 	text = text.replace(/@ngInject([.\s\S]+?){/gi, function(match,functionDef)
 	{

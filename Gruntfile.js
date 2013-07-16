@@ -35,6 +35,16 @@ module.exports = function(grunt) {
 			options: _.merge(config.require, { 
 				// config.require overrides
 				// See example @ https://github.com/jrburke/r.js/blob/master/build/example.build.js
+
+				// IMPORTANT: changing the 'out' option will break AngularJS @ngInject
+				// Using method to make some pre-minifications modifications
+				out: function(text)
+				{
+					// Fill Angular injection rules to avoid mangling issues with minification and AngularJS
+					// Similar result than in this Google Closure class: http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java
+					text = buildUtils.angularPass(text);
+					grunt.file.write(destFile, text);
+				}
 			})}
 		},
 

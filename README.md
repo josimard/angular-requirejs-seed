@@ -35,9 +35,79 @@ Keep in mind that no build tool or build watcher is necessary to develop and deb
 
 By default a "./dist" folder will be generated with a minified and obfuscated version of your code and only the necessary files to serve over HTTP. Feel free to modify the [Gruntfile.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/Gruntfile.js) to suit your needs.
 
+
+    
+## Wiring AngularJS controllers 
+
+To wire controllers in this rig it's a piece of cake:
+
+- Register it's path in [config.js](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/config.js)
+
+		angular: {
+			controllers: [
+				// Define AMD controllers first
+				"js/controllers/MyControl",
+
+				// Global scope controllers can be used, but must be listed after AMD ones
+				"js/controllers/MyGlobalScopeControl"
+			]
+		}
+
+- Use a string in your [routes](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/routing.js) instead of linking with the functions directly:
+
+		$routeProvider.when('path', {templateUrl: 'templates/yeah.html', controller: "MyControl"});
+
+
+- Add the @ngInject build directive comment before a function declaration with AngularJS injectables.
+
+		/** @ngInject */
+		function MyControl($scope, $http)
+		{
+			
+		}
+
+## Understanding the @ngInject build directive
+
+
+
+There is normally two ways to setup AngularJS controllers:
+
+- _Global scope controllers_ ( like [this one](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/js/controllers/ListControl.js) )
+
+		function MyGlobalScopeControl($scope, $http)
+		{
+				
+		}
+		
+- _Registered controllers_ 
+	
+		angular.module('app').controller('MyController', function($scope, $http){
+		
+		});
+
+When making a build, you minified code will change the attributes names and AngularJS will not understand what to inject anymore, getting you into [trouble like this](http://stackoverflow.com/questions/16242406/angular-js-error-with-providerinjector).
+
+The problem is that with AMD modules you would normally have to use the second option, and you would end up with having to write ridiculous controller declarations:
+
+		angular.module('app').controller("MyController", ["$scope", "$http", "Service1", "Service2"], function ($scope, $http, Service1, Service2) {
+			// Yeah, right… what this controller name yet?
+		}
+
+People at Google are clever and came up with [this solution](http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java) for their Closure compiler. But what if we prefer using UglifyJS? We can, since we are in control of our build with Grunt! That's why I wired-in a simple angularPass() method in the [build utilities](https://github.com/pheno7/angular-requirejs-seed/blob/master/scripts/build-utils.js).
+
+Using the @ngInject comment, once minified, your controller methods will have injection rules on top of them: (for both global scope methods or AMD wrapped)
+	
+		MyMinifiedControl.$inject = ['$scope', '$http'];		
+		function MyMinifiedControl(a, b)
+		{		
+			// a and b will not throw an error due to $inject
+			// a is $scope
+			// b is $http
+		}
+
 ## LESS, SASS or plain CSS?
 
-It's up to you really, but since I like [LESS](http://lesscss.org/), I included the necessary to get you up and running easily:
+It's up to you really, but since I like [LESS](http://lesscss.org/), I included the necessary bits to get you up and running easily:
 
 You can setup LESS for this project running [install-less.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/install-less.sh).
 
@@ -47,11 +117,12 @@ You can setup LESS for this project running [install-less.sh](https://github.com
 There is also a lightweight LESS watching script to transform your LESS to CSS on the fly. You can start it running [watch-less.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/watch-less.sh).
 
     $ node scripts/watch-less.js
-
+    
 ## What else?
 
 Good practices for overall productivity, code maintanability, ease-of-debugging and most of all keeping it simple as possible but ready for scaling.
 
+- _Comments_: preaching commenting your code by example.
 - Localization using the [RequireJS i18n plugin](https://github.com/requirejs/i18n) for it's simplicity, see the [Localization](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/models/Localization.js) model.
 - [Dynamic routing](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/routing.js) to handle more cases, flexibility, route localization and page title changes.
 - A simple [boot](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/boot.js) procedure triggered by RequireJS. 
