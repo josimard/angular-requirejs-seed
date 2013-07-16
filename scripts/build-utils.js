@@ -68,7 +68,7 @@ function configureRequireShims(config)
 
 /**
 * Fill Angular injection rules to avoid mangling issues with minification and AngularJS
-* To flag methods for injection, simply add the following comment before the function declaration: */
+* To flag methods for injection, simply add the following comment before a function declaration: */
 /** @ngInject */ 
 function fillInjectionRules(text)
 {
