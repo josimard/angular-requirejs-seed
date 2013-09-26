@@ -34,13 +34,13 @@ define([], function ()
 	function initI18N(onComplete)
 	{
 		// Configure require.js locale
-		require.config({
+		requirejs.config({
 			// i18n Locale, see documentation for supported locales or how to implement a new one
 			locale: context.locale,
 		});
 
 		// Get default locales bundle
-		require(["i18n!"+defaultLocalesBundle], function (i18nLocales)
+		requirejs(["i18n!"+defaultLocalesBundle], function (i18nLocales)
 		{
 			// Assign merged locales object to singleton
 			context.locales = i18nLocales;
@@ -52,7 +52,7 @@ define([], function ()
 	// Example to dynamically get a locales bundle asynchronously
 	function getLocales(name, onComplete)
 	{
-		require(["i18n!"+localesPath+"/"+name], function (i18nLocales)
+		requirejs(["i18n!"+localesPath+"/"+name], function (i18nLocales)
 		{
 			// We could assign merged locales object to singleton for easy access
 			//context.locales[name] = i18nLocales;

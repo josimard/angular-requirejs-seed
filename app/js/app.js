@@ -15,7 +15,7 @@ function (angular, Localization, Routing)
 		module = angular.module(moduleName, []);
 
 		// Get all controllers from configuration, AMD or not
-		require(angularConfig.controllers, function ()
+		requirejs(angularConfig.controllers, function ()
 		{
 			// Register controllers from config
 			for(var i=0; i<arguments.length; i++)

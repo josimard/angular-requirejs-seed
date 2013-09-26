@@ -13,7 +13,7 @@ define([], {
 	},
 
 	// RequireJS configuration
-	require: {
+	requirejs: {
 		name: "js/app",
 		baseUrl:"./",
 		paths:{
