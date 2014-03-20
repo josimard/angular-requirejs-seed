@@ -24,7 +24,7 @@ function (angular, Localization)
 			return context;
 		}]);
 
-		function init($routeProvider, $locationProvider)
+		function init(config, $routeProvider, $locationProvider)
 		{
 			// You can set the urls to hashbang ajax urls with $locationProvider, but all your adresses will need to be prefixed with "!" ie "#!/home/"
 			// More info @ https://developers.google.com/webmasters/ajax-crawling/docs/faq
@@ -33,28 +33,29 @@ function (angular, Localization)
 			// Setup routes here 
 			// Verify your templates accessibility if you receive a similar error:
 			// "[Exception... "Access to restricted URI denied"  code: "1012" ..."
-			$routeProvider.
-				// Specific template for home (and re-using PageControl)
-				when(routePrefix+':lang/home', {templateUrl: 'templates/home.html', controller: "HomeControl"}).
 
-				// Call to a list"
-				when(routePrefix+':lang/list/:name', {templateUrl: 'templates/list.html', controller: "ListControl"}).
-
-				// Lastly, a generic page getter (should handle 404 when no content is found)
-				when(routePrefix+':lang/:name', {templateUrl: 'templates/page.html', controller: "PageControl"}).
-
-				// Handle other url queries
-				otherwise({redirectTo: function(routeParams, path, search)
+			// Routes in config.js?
+			if(config.angular.routes)
+			{
+				for(var i=0; i<config.angular.routes.length; i++)
 				{
-					// Home path
-					if(path=="/" || path=="") return getHomeUrl();
-					
-					// Not compatible with page controller, use as a query
-					if(path.split("/").length>4) {
-						path = get404url(path);
-					}
-					return path;
-				}});
+					//console.log(config.angular.routes[i].url)
+					$routeProvider.when(config.angular.routes[i].url, config.angular.routes[i]);
+				}
+			}
+
+			// Handle other url queries
+			$routeProvider.otherwise({redirectTo: function(routeParams, path, search)
+			{
+				// Home path
+				if(path=="/" || path=="") return getHomeUrl();
+				
+				// Not compatible with page controller, use as a query
+				if(path.split("/").length>4) {
+					path = get404url(path);
+				}
+				return path;
+			}});
 		}
 
 		function getHomeUrl()
@@ -69,9 +70,7 @@ function (angular, Localization)
 			return url;
 		}
 
-
 		// Public methods
-
 		function pageTitle(value) {
 			if(value){
 				title = value+" | "+defaultTitle;

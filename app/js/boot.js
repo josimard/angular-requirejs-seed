@@ -1,10 +1,14 @@
+// Pre-loaded angular.js
+define('angular', function () {return angular;}); 
+
+
 // First, let's load configuration file to configure RequireJS
 requirejs.config({baseUrl:"./"});
-requirejs(["config"], function (config)
+requirejs(["js/config"], function (config)
 {
 	"use strict";
 	// Link against minified version:
-	//config.require.paths["js/app"] = "js/app.min";
+	//config.requirejs.paths["js/app"] = "js/app.min";
 
 	// Configure RequireJS
 	requirejs.config(config.requirejs);
@@ -20,7 +24,7 @@ requirejs(["config"], function (config)
 			Localization.init(function()
 			{
 				// Start application 
-				app.init(config.angular);
+				app.init(config);
 			});
 		});
 	});

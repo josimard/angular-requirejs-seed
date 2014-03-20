@@ -1,3 +1,4 @@
 /node_modules
 /dist/*
 .DS_Store
+app/js/app.min.js

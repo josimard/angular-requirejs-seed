@@ -1,4 +1,4 @@
-define(["angular", "jquery", "js/controllers/PageControl"], function (angular, jQuery, PageControl)
+define(["angular", "js/controllers/PageControl"], function (angular, PageControl)
 {
 	/** @ngInject */
 	function HomeControl($scope, $http, Routing, Localization)
@@ -43,14 +43,9 @@ define(["angular", "jquery", "js/controllers/PageControl"], function (angular, j
 	{
 		if(_LibrariesLoaded) { onComplete(); return; }
 
-		// Using modernizr included yepnope to inject JS libraries at runtime - http://modernizr.com/download/ + http://yepnopejs.com/
-		yepnope({
-			// Using raw.github url for demonstration purposes only, never do that on a production app since the code could change and break your app, or github could block your server IP
-			both: ["https://raw.github.com/thomasklemm/Readme.js/master/readme.js"],
-			complete: function() {
-				_LibrariesLoaded = true;
+		jQuery.getScript( "https://raw.github.com/thomasklemm/Readme.js/master/readme.js", function(script, textStatus, jqXHR){
+			_LibrariesLoaded = true;
 				onComplete();
-			}
 		});
 	}
 	

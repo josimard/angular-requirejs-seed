@@ -18,7 +18,7 @@ A first-time installation is necessary to get [Grunt](http://gruntjs.com/) and i
 
     $ npm install
 
-To install the latest Grunt depencencies with [install-latest.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/install-latest.sh)
+To install the latest Grunt depencencies
   
     $ npm install grunt-cli -g
     $ npm install grunt --save-dev
@@ -26,15 +26,16 @@ To install the latest Grunt depencencies with [install-latest.sh](https://github
     $ npm install grunt-contrib-uglify --save-dev
     $ npm install grunt-contrib-copy --save-dev
 
-- Tip: On windows, you can run easily run shell scripts (.sh files) by double-clicking when you install [Git Bash](http://git-scm.com/downloads) shipped with Git.
 
 ##Building the project
-To generate an optimized build, use Grunt as usual or run [build.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/build.sh).
+
+To generate an optimized build, use Grunt as usual
+
+	$ npm install grunt
 
 Keep in mind that no build tool or build watcher is necessary to develop and debug your application. Simply open [app/index.html](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/index.html) in a browser and experience coding comfort. Thanks to [RequireJS](http://requirejs.org/).
 
-By default a "./dist" folder will be generated with a minified and obfuscated version of your code and only the necessary files to serve over HTTP. Feel free to modify the [Gruntfile.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/Gruntfile.js) to suit your needs.
-
+By default a "./dist" folder will be generated with a minified and obfuscated version of your code and only the necessary files to serve over HTTP. Feel free to modify the [Gruntfile.js](https://github.com/pheno7/angular-requirejs-seed/blob/master/Gruntfile.js) to suit your needs.
 
     
 ## Wiring AngularJS controllers 
@@ -53,7 +54,7 @@ To wire controllers in this rig it's a piece of cake:
 			]
 		}
 
-- Use a string in your [routes](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/js/routing.js) instead of linking with the functions directly:
+- Use a string in your [routes](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/js/services/Routing.js) instead of linking with the functions directly:
 
 		$routeProvider.when('path', {templateUrl: 'templates/yeah.html', controller: "MyControl"});
 
@@ -67,7 +68,6 @@ To wire controllers in this rig it's a piece of cake:
 		}
 
 ## Understanding the @ngInject build directive
-
 
 
 There is normally two ways to setup AngularJS controllers:
@@ -104,21 +104,8 @@ Using the @ngInject comment, once minified, your controller methods will have in
 			// a is $scope
 			// b is $http
 		}
-
-## LESS, SASS or plain CSS?
-
-It's up to you really, but since I like [LESS](http://lesscss.org/), I included the necessary bits to get you up and running easily:
-
-You can setup LESS for this project running [install-less.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/install-less.sh).
-
-    $ npm install grunt-contrib-less --save-dev
-    $ node scripts/install-less.js
-
-There is also a lightweight LESS watching script to transform your LESS to CSS on the fly. You can start it running [watch-less.sh](https://github.com/pheno7/angular-requirejs-seed/blob/master/watch-less.sh).
-
-    $ node scripts/watch-less.js
     
-## What else?
+## What else is in there?
 
 Good practices for overall productivity, code maintanability, ease-of-debugging and most of all keeping it simple as possible but ready for scaling.
 

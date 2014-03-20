@@ -10,7 +10,7 @@
 define([], function ()
 {
 	var context = this;
-	var localesPath = "nls";
+	var localesPath = "assets/nls";
 	var defaultLocalesBundle = localesPath+"/locales";
 
 	function init(onComplete)
