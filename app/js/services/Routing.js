@@ -4,11 +4,10 @@
 * - handle route localization
 * - set page title, etc.
 */
-define(["angular","js/services/Localization"], 
-function (angular, Localization)
+define(["angular"], 
+function (angular)
 {
-	// Class
-	function Routing(angularModule, config)
+	function Routing(angularModule, appConfig)
 	{
 		var context = this;
 		var routePrefix = "/";
@@ -35,13 +34,13 @@ function (angular, Localization)
 			// Verify your templates accessibility if you receive a similar error:
 			// "[Exception... "Access to restricted URI denied"  code: "1012" ..."
 
-			// Routes in config.js?
-			if(config.angular.routes)
+			// Routes in appConfig.js?
+			if(appConfig.angular.routes)
 			{
-				for(var i=0; i<config.angular.routes.length; i++)
+				for(var i=0; i<appConfig.angular.routes.length; i++)
 				{
 					//console.log(config.angular.routes[i].url)
-					$routeProvider.when(config.angular.routes[i].url, config.angular.routes[i]);
+					$routeProvider.when(appConfig.angular.routes[i].url, appConfig.angular.routes[i]);
 				}
 			}
 
@@ -61,12 +60,12 @@ function (angular, Localization)
 
 		function getHomeUrl()
 		{
-			return routePrefix+Localization.lang+"/home";
+			return routePrefix+appConfig.lang+"/home";
 		}
 
 		function get404url(referer)
 		{
-			var url = routePrefix+Localization.lang+"/404";
+			var url = routePrefix+appConfig.lang+"/404";
 			if(referer) url+= "?r="+referer;
 			return url;
 		}
@@ -90,7 +89,6 @@ function (angular, Localization)
 		}
 		
 		// Expose public methods
-		this.init = init;
 		this.show404 = show404;
 		this.pageTitle = pageTitle;
 		this.setDefaultTitle = setDefaultTitle;

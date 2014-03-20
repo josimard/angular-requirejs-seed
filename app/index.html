@@ -4,11 +4,8 @@
 	https://github.com/pheno7/angular-requirejs-seed
 	Change all "lang" attributes to change locale, ie: "fr-CA"
 -->
-<!--[if lt IE 7 ]> <html lang="en" class="ie ie6"> <![endif]-->
-<!--[if IE 7 ]>    <html lang="en" class="ie ie7"> <![endif]-->
-<!--[if IE 8 ]>    <html lang="en" class="ie ie8"> <![endif]-->
 <!--[if IE 9 ]>    <html lang="en" class="ie ie9"> <![endif]-->
-<!--[if !IE]><!--> <html lang="en" class="noie"> <!--<![endif]-->
+<!--[if !IE]><!--> <html lang="en"> <!--<![endif]-->
 	<head>
 		<title>AngularJS + RequireJS HTML5 project example</title>
 
@@ -21,6 +18,7 @@
 		<link rel="stylesheet" href="assets/css/normalize.css" />
         <link rel="stylesheet" href="assets/css/main.css" />
 	</head>
+
 	<body>
 		<div id="wrap" class="rounded-shadow">
 
@@ -44,7 +42,7 @@
 
 			<!-- This will be hidden when the application is loaded -->
 			<section id="splash" class="contentWrap">
-				<!-- You could put SEO indexable content here, some nice graphics nor a loading animation -->
+				<!-- You could put SEO indexable content here, some nice graphics nor a loading animation, or use ng-cloak -->
 			</section>
 
 			<section id="content" class="contentWrap" ng-view></section>
@@ -56,12 +54,8 @@
 			<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.2/angular-resource.min.js"></script>
 
 			<!-- http://requirejs.org/ - will run boot.js -->
-			<!-- build:[data-main] js/boot -->
-				<script data-main="js/boot" src="lib/require.js"></script>
-			<!-- /build -->
+			<script data-main="js/boot" src="lib/require.js"></script>
 			
-			
-
 		</div><!-- /#wrap -->
 
 		<footer>
@@ -70,5 +64,3 @@
 
 	</body>
 </html>
-
-

@@ -1,7 +1,6 @@
 /**
-* Singleton-style localization component example
+* Localization component example
 * Using the require.js i18n plugin for the sake of simplicity
-* init() should be called before any other compenent requires the i18n plugin
 *
 * Centralizing your localization in a component reduces your dependency over a single framework and switching system application-wide should prove be easier
 * Another interesting framework: i18next @ http://i18next.com/
@@ -9,61 +8,43 @@
 */
 define([], function ()
 {
-	var context = this;
-	var localesPath = "assets/nls";
-	var defaultLocalesBundle = localesPath+"/locales";
-
-	function init(onComplete)
+	function Localization(angularModule, appConfig, onComplete)
 	{
-		// Localization init (from html lang) -- http://www.w3.org/TR/html401/struct/dirlang.html#h-8.1.1
-		var locale = document.documentElement.lang;
+		var context = this;
+		context.locale = appConfig.locale;
+		context.lang = appConfig.lang;
 
-		// Default locale
-		if(!locale || locale=="en") locale = "en-US";
+		var path = appConfig.localization.path;
+		var defaultBundle = path+"/"+appConfig.localization.defaultBundle;
 
-		// Two letter lang
-		context.lang = locale.substring(0,2);
-
-		// Four or two letter localization
-		context.locale = locale;
+		// Register AngularJS as service (singleton)
+		angularModule.service('Localization', function() {return context;});
 
 		// i18n plugin init
-		initI18N(onComplete);
-	}
-
-	function initI18N(onComplete)
-	{
-		// Configure require.js locale
-		requirejs.config({
-			// i18n Locale, see documentation for supported locales or how to implement a new one
-			locale: context.locale,
-		});
-
 		// Get default locales bundle
-		requirejs(["i18n!"+defaultLocalesBundle], function (i18nLocales)
+		requirejs(["i18n!"+defaultBundle], function (i18nLocales)
 		{
 			// Assign merged locales object to singleton
 			context.locales = i18nLocales;
 			
 			onComplete();
 		});
-	}
 
-	// Example to dynamically get a locales bundle asynchronously
-	function getLocales(name, onComplete)
-	{
-		requirejs(["i18n!"+localesPath+"/"+name], function (i18nLocales)
+		// Example to dynamically get a locales bundle asynchronously
+		function getLocales(name, onComplete, assign)
 		{
-			// We could assign merged locales object to singleton for easy access
-			//context.locales[name] = i18nLocales;
-			
-			onComplete(i18nLocales);
-		});
+			requirejs(["i18n!"+path+"/"+name], function (i18nLocales)
+			{
+				// Assign merged locales object to module for easy access
+				if(assign) context.locales[name] = i18nLocales;
+				
+				onComplete(i18nLocales);
+			});
+		}
+		
+		// Singleton-style component public API
+		return context;
 	}
 
-	// Set public API methods
-	this.init = init;
-	
-	// Singleton-style component public API
-	return context;
+	return Localization;
 });

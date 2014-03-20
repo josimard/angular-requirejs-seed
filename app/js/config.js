@@ -1,6 +1,14 @@
 define([], {
+
+	localization: {
+		path: "assets/nls",
+		defaultBundle: "locales"
+	}, 
+
 	// AngularJS configuration
 	angular: {
+		name: "app",
+		
 		// ngController list (For inclusion in requirejs optimizer and run-time loading)
 		controllers: [
 			// Define AMD controllers first

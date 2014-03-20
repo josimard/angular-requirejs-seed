@@ -1,52 +1,66 @@
+/* 
+* AngularJS + RequireJS HTML5 Application
+* @see https://github.com/pheno7/angular-requirejs-seed
+* @author Jo Simard
+*/
 'use strict';
 define(['angular', "js/services/Localization", "js/services/Routing"], 
 function (angular, Localization, Routing)
 {
-	var moduleName = "app";
-	var module;
-	var routing;
-	
-	/**
-	* Initialize the application as a AngularJS module
-	*/
-	function init(config)
+	function App(config)
 	{
-		// AngularJS Module
-		module = angular.module(moduleName, ['ngRoute']);
+		var context = this;
 
-		// Get all controllers from configuration, AMD or not
-		requirejs(config.angular.controllers, function ()
+		// AngularJS Module - http://docs.angularjs.org/guide/module
+		var module;
+
+		// Localization service
+		var localization;
+
+		// Routing service
+		var routing;
+
+		function init()
 		{
-			// Register controllers to application
-			for(var i=0; i<arguments.length; i++)
+			module = angular.module(config.angular.name, ['ngRoute']);
+
+			localization = new Localization(module, config, onLocalizationReady);
+		}
+
+		function onLocalizationReady()
+		{
+			// Get all controllers from configuration, AMD or not
+			requirejs(config.angular.controllers, function ()
 			{
-				var controllerName = config.angular.controllers[i];
-				controllerName = controllerName.substring(controllerName.lastIndexOf("/")+1, controllerName.length);
-				if(arguments[i]) module.controller(controllerName, arguments[i]);
-			}
+				// Register controllers to application
+				for(var i=0; i<arguments.length; i++)
+				{
+					var controllerName = config.angular.controllers[i];
+					controllerName = controllerName.substring(controllerName.lastIndexOf("/")+1, controllerName.length);
+					if(arguments[i]) module.controller(controllerName, arguments[i]);
+				}
 
-			// Set the Localization component as an AngularJS service (singleton)
-			module.service('Localization', function() {return Localization;});
+				// Create our Routing service
+				routing = new Routing(module, config);
 
-			// Create our Routing module that will register itself as a AngularJS service/provider
-			routing = new Routing(module, config);
+				onAppReady();
+			});
+		}
 
+		function onAppReady()
+		{
 			// Start angular JS boostrap
-			angular.bootstrap(document.body, [moduleName]);
+			angular.bootstrap(document.body, [config.angular.name]);
 
-			onAppReady();
-		});
+			// Hide the splash screen
+			document.getElementById('splash').style.visibility = 'hidden'; 
+		};
+
+		// Public API
+		context.init = init;
+
+		return context;
 	}
 
-	function onAppReady()
-	{
-		// Hide the splash screen
-		document.getElementById('splash').style.visibility = 'hidden'; 
-	};
-
-	// Public API
-	return {
-		init: init,
-		module: function() {return module;}
-	};
+	return App;
 });

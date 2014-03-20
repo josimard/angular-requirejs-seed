@@ -81,7 +81,7 @@ function buildTasks(tasks, gruntConfig)
 				}
 			}
 			
-			console.log("Writing uglify output: "+dist.out)
+			console.log("Writing uglify output: "+dist.dest)
 			fs.writeFile(dist.dest, result.code, function (err) {
 			  if (err) throw err;
 			  done();

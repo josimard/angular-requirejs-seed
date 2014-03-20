@@ -1,13 +1,14 @@
-/*global module*/ 
+/* 
+* AngularJS + RequireJS HTML5 Application Build Script
+* @see https://github.com/pheno7/angular-requirejs-seed
+* @author Jo Simard
+*/
 module.exports = function(grunt) {
 'use strict';
 
 	// Custom utilities to ease the mix of AngularJS, the RequireJS optimizer and UglifyJS2
 	var buildUtils = require('./tools/build-utils');
 	buildUtils.init(grunt);
-
-	// lodash
-	var _ = grunt.util._;
 
 	var baseUrl = "./app";
 
@@ -32,7 +33,6 @@ module.exports = function(grunt) {
 	// Grunt Configuration
 
 	var pkg = grunt.file.readJSON('package.json');
-	var defaultTasks = [];
 
 	var gruntConfig =
 	{
@@ -99,11 +99,14 @@ module.exports = function(grunt) {
 		}
 	};
 
-	buildUtils.buildTasks(defaultTasks, gruntConfig);
-
-	// Grunt configuration/task
+	// Grunt init
 	console.log("\n\nBuilding project to "+buildConfig.dest+"\n");
 
+	// Configure grunt
 	grunt.initConfig(gruntConfig);
+
+	// Create tasks
+	var defaultTasks = [];
+	buildUtils.buildTasks(defaultTasks, gruntConfig);
 	grunt.registerTask('default', defaultTasks);
 };
