@@ -59,6 +59,7 @@ module.exports = function(grunt) {
 			dist: {
 				files: {
 					// Add more JS files here, main file will be added dynamically
+					// 'dest/output.min.js': ['src/input1.js', 'src/input2.js']
 				}
 			}
 		},
