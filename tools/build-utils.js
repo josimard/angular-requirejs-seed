@@ -170,24 +170,41 @@ function configureRequireShims(config)
 }
 
 /**
-* Fill Angular injection rules to avoid mangling issues with minification
-* @see http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java
-* */
-// To flag methods for injection, simply add the following comment before the function declaration:
-/** @ngInject */ 
+* Prepare Angular injection rules for minification: to avoid mangling issues with minification
+*/
 function angularPass(text)
 {
+	// Using NG annotate for inline-injection (for module.controller(), module.service(), module.factory(), etc.)
+	// https://github.com/olov/ng-annotate
+	var ngAnnotate = require("ng-annotate");
+	text = ngAnnotate(text, {add: true}).src;
+
+	/* 
+	* Angular Pass, Google closure-style - see http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java
+	* */
+
+	// To flag methods for injection, simply add the following comment before the function declaration:
+	/** @ngInject */ 
 	text = text.replace(/@ngInject([.\s\S]+?){/gi, function(match,functionDef)
 	{
 		// Get method name
-		var functionName = /function ([.\s\S]+?)\(/.exec(functionDef)[1];
+		var functionHead = /function ([.\s\S]+?)\(/.exec(functionDef);
+		var functionName = (functionHead) ? functionHead[1] : null;
 
 		// Get method argument list
 		var args = /\(([^)]+)/.exec(functionDef);
 		if (args[1]) args = args[1].split(/\s*,\s*/);
 
 		// Injection directive
-		var angularInject = "@generated */ "+functionName+".$inject = "+JSON.stringify(args)+";\n/**";
+		if(functionName)
+		{
+			var angularInject = "@generated */ "+functionName+".$inject = "+JSON.stringify(args)+";\n/**";
+		}
+		// Anonymous functions
+		else {
+			// SHOULD NOT HAPPEND!
+			// Injection will not apply, ng-annotate should handle those cases
+		}
 
 		return angularInject+match;
 	});

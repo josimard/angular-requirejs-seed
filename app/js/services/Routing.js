@@ -8,7 +8,7 @@ define(["angular","js/services/Localization"],
 function (angular, Localization)
 {
 	// Class
-	function Routing(angularModule, settings)
+	function Routing(angularModule, config)
 	{
 		var context = this;
 		var routePrefix = "/";
@@ -16,15 +16,16 @@ function (angular, Localization)
 		var title = defaultTitle;
 
 		// Register as angular provider
-		angularModule.factory('Routing', ['$location', '$routeParams', function($location, $routeParams)
+		angularModule.service('Routing', function($location, $routeParams)
 		{
 			// Self-assign injectables for public availability
 			context.location = $location;
 			context.params = $routeParams;
 			return context;
-		}]);
+		});
 
-		function init(config, $routeProvider, $locationProvider)
+		// Configure application module
+		angularModule.config(function($routeProvider, $locationProvider)
 		{
 			// You can set the urls to hashbang ajax urls with $locationProvider, but all your adresses will need to be prefixed with "!" ie "#!/home/"
 			// More info @ https://developers.google.com/webmasters/ajax-crawling/docs/faq
@@ -56,7 +57,7 @@ function (angular, Localization)
 				}
 				return path;
 			}});
-		}
+		});
 
 		function getHomeUrl()
 		{

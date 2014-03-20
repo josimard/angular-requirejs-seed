@@ -17,7 +17,7 @@ function (angular, Localization, Routing)
 		// Get all controllers from configuration, AMD or not
 		requirejs(config.angular.controllers, function ()
 		{
-			// Register controllers from config
+			// Register controllers to application
 			for(var i=0; i<arguments.length; i++)
 			{
 				var controllerName = config.angular.controllers[i];
@@ -25,20 +25,11 @@ function (angular, Localization, Routing)
 				if(arguments[i]) module.controller(controllerName, arguments[i]);
 			}
 
-			// Create our Routing module that will register itself as a AngularJS provider
-			routing = new Routing(module);
+			// Set the Localization component as an AngularJS service (singleton)
+			module.service('Localization', function() {return Localization;});
 
-			// Configure application module
-			module.config(['$routeProvider', '$locationProvider', function($routeProvider, $locationProvider)
-			{
-				// Handling routes in the routing component
-				routing.init(config, $routeProvider, $locationProvider);
-
-
-			}]);
-
-			// Set the Localization component as an AngularJS service
-			module.factory('Localization', function() {return Localization;});
+			// Create our Routing module that will register itself as a AngularJS service/provider
+			routing = new Routing(module, config);
 
 			// Start angular JS boostrap
 			angular.bootstrap(document.body, [moduleName]);

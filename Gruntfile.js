@@ -2,7 +2,7 @@
 module.exports = function(grunt) {
 'use strict';
 
-	// Custom utilities to ease the mix of AngularJS, the RequireJS optimizer and UglifyJS
+	// Custom utilities to ease the mix of AngularJS, the RequireJS optimizer and UglifyJS2
 	var buildUtils = require('./tools/build-utils');
 	buildUtils.init(grunt);
 

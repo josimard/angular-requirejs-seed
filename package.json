@@ -6,6 +6,7 @@
     "grunt": "~0.4.4",
     "grunt-contrib-requirejs": "~0.4.3",
     "grunt-contrib-copy": "~0.4.1",
-    "uglify-js": "~2.4.12"
+    "uglify-js": "~2.4.12",
+    "ng-annotate": "~0.4.0"
   }
 }
