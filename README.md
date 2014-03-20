@@ -21,23 +21,19 @@ A first-time installation is necessary to get [Grunt](http://gruntjs.com/) and i
 To install the latest Grunt depencencies
   
     $ npm install grunt-cli -g
-    $ npm install grunt --save-dev
-    $ npm install grunt-contrib-requirejs --save-dev
-    $ npm install grunt-contrib-uglify --save-dev
-    $ npm install grunt-contrib-copy --save-dev
-
+    $ npm update --save
 
 ##Building the project
 
 To generate an optimized build, use Grunt as usual
 
-	$ npm install grunt
+	$ grunt
 
-Keep in mind that no build tool or build watcher is necessary to develop and debug your application. Simply open [app/index.html](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/index.html) in a browser and experience coding comfort. Thanks to [RequireJS](http://requirejs.org/).
+A "dist" folder will be generated with a minified version of your app/js files and only the necessary dependencies to serve over HTTP. Feel free to modify the [Gruntfile.js](https://github.com/pheno7/angular-requirejs-seed/blob/master/Gruntfile.js) to suit your needs.
 
-By default a "./dist" folder will be generated with a minified and obfuscated version of your code and only the necessary files to serve over HTTP. Feel free to modify the [Gruntfile.js](https://github.com/pheno7/angular-requirejs-seed/blob/master/Gruntfile.js) to suit your needs.
+Keep in mind that no build tool or build watcher is necessary to develop and debug your application. Simply open [app/index.html](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/index.html) and experience coding comfort. Thanks to [RequireJS](http://requirejs.org/).
 
-    
+
 ## Wiring AngularJS controllers 
 
 To wire controllers in this rig it's a piece of cake:
@@ -59,7 +55,7 @@ To wire controllers in this rig it's a piece of cake:
 		$routeProvider.when('path', {templateUrl: 'templates/yeah.html', controller: "MyControl"});
 
 
-- Add the @ngInject build directive comment before a function declaration with AngularJS injectables.
+- Add the @ngInject build directive comment before controllers constructors using [AngularJS injectables](http://docs.angularjs.org/guide/di).
 
 		/** @ngInject */
 		function MyControl($scope, $http)
@@ -85,24 +81,30 @@ There is normally two ways to setup AngularJS controllers:
 		
 		});
 
-When making a build, you minified code will change the attributes names and AngularJS will not understand what to inject anymore, getting you into [trouble like this](http://stackoverflow.com/questions/16242406/angular-js-error-with-providerinjector).
+Usually, when minifying code, your minifier would change the attributes names and AngularJS would not understand what to inject anymore, getting you into [trouble like this](http://stackoverflow.com/questions/16242406/angular-js-error-with-providerinjector).
 
-The problem is that with AMD modules you would normally have to use the second option, and you would end up with having to write ridiculous controller declarations:
+You would then have to end up writing some weird and hard-to-maintain declarations:
 
 		angular.module('app').controller("MyController", ["$scope", "$http", "Service1", "Service2"], function ($scope, $http, Service1, Service2) {
 			// Yeah, right… what this controller name yet?
 		}
 
-People at Google are clever and came up with [this solution](http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java) for their Closure compiler. But what if we prefer using UglifyJS? We can, since we are in control of our build with Grunt! That's why I wired-in a simple angularPass() method in the [build utilities](https://github.com/pheno7/angular-requirejs-seed/blob/master/scripts/build-utils.js).
+People at Google are clever and came up with [this solution](http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java) for their Closure compiler. But what if we prefer using UglifyJS? We can, since we are in control of our build with Grunt! That's why I wired-in a simple angularPass() method in the [build utilities](https://github.com/pheno7/angular-requirejs-seed/blob/master/scripts/build-utils.js), this pass also permit to avoid listing injectable strings with the use of [ng-annotate](https://github.com/olov/ng-annotate).
 
-Using the @ngInject comment, once minified, your controller methods will have injection rules on top of them: (for both global scope methods or AMD wrapped)
+By adding the @ngInject before your controllers constructors, injection will be automatically added:
+
+		/** @ngInject */		
+		function MyController('$scope', '$http'])
+		{		
+			
+		}
+
+Once minified with this projet's [grunt file](https://github.com/pheno7/angular-requirejs-seed/blob/master/Gruntfile.js), the previous code will look like this:
 	
-		MyMinifiedControl.$inject = ['$scope', '$http'];		
-		function MyMinifiedControl(a, b)
+		MyController.$inject = ['$scope', '$http'];		
+		function MyController(a, b)
 		{		
 			// a and b will not throw an error due to $inject
-			// a is $scope
-			// b is $http
 		}
     
 ## What else is in there?
