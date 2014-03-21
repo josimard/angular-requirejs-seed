@@ -17,12 +17,6 @@ module.exports = function(grunt) {
 		js: {
 			license: '/* <%= pkg.name %> <%= grunt.template.today("dd-mm-yyyy") %> */\n',
 			dest: "./app/js/app.min.js"
-		},
-		css: {
-			// Main CSS file
-			file: "assets/main.css",
-			// Additional css files
-			files: ["assets/normalize.css"]
 		}
 	}
 
@@ -54,10 +48,10 @@ module.exports = function(grunt) {
 			options: {
 				license: buildConfig.js.license
 			},
-			// Only compact format supported, single destination: http://gruntjs.com/configuring-tasks#compact-format
-			dist: {
-				src: buildConfig.js.dest,
-				dest: buildConfig.js.dest
+			main: {
+				files: [
+					{src: [buildConfig.js.dest], dest: buildConfig.js.dest}
+				]
 			}
 		}, 
 
@@ -83,7 +77,6 @@ module.exports = function(grunt) {
 				
 			},
 			dist: {
-				// http://gruntjs.com/configuring-tasks#files-array-format
 				files: [
 					{src: baseUrl+'/index.html', dest: buildConfig.dest+'/app/index.html'}
 				]

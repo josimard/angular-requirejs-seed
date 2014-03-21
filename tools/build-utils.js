@@ -64,27 +64,45 @@ function buildTasks(tasks, gruntConfig)
 	if(gruntConfig.uglify)
 	{
 		var UglifyJS = require("uglify-js");
-		tasks.push("uglify2");
-		grunt.registerTask('uglify2', 'UglifyJS2 Custom Task', function()
+		tasks.push("uglify");
+		grunt.registerMultiTask('uglify', 'UglifyJS2 Custom Task', function()
 		{
-			// TODO: grunt files types http://gruntjs.com/configuring-tasks#files
-			var done = this.async();
-			var config = grunt.config().uglify;
-			var dist = config.dist;
-			var result = UglifyJS.minify(dist.src);
-				
-			if(config.options)
+			// Default options
+			var options = this.options({
+				angularPass: true
+			});
+
+			this.files.forEach(function (f)
 			{
-				if(config.options.license)
+				var src = f.src.filter(function (filepath)
+					{
+						if (!grunt.file.exists(filepath)) {
+							grunt.log.warn('Source file "' + filepath + '" not found.');
+							return false;
+						} else {
+							return true;
+						}
+					}).map(function (filepath)
+					{
+						var content = fs.readFileSync(filepath).toString();
+						return content;
+				}).join('\n');
+
+				// AngularJS pass
+				// Fills Angular injection annotations to avoid mangling issues with minification and AngularJS
+				// Similar result than in this Google Closure class: http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java
+				if(options.angularPass) src = angularPass(src.toString());
+
+				var result = UglifyJS.minify(src, {fromString: true});
+
+				// Prepend liscense?
+				if(options.license)
 				{
-					result.code=config.options.license+result.code;
+					result.code=options.license+result.code;
 				}
-			}
-			
-			console.log("Writing uglify output: "+dist.dest)
-			fs.writeFile(dist.dest, result.code, function (err) {
-			  if (err) throw err;
-			  done();
+
+				console.log("Writing uglify output: "+f.dest)
+				grunt.file.write(f.dest, result.code);
 			});
 		});
 	}
@@ -132,13 +150,8 @@ function initRequireConfig(config, baseUrl, destFile)
 		//name: main,
 		optimize: 'none', // Not using the optimizer at this stage yet
 
-		// IMPORTANT: changing the 'out' option will break AngularJS @ngInject
-		// Using method to make some pre-minifications modifications
 		out: function(text)
 		{
-			// Fill Angular injection rules to avoid mangling issues with minification and AngularJS
-			// Similar result than in this Google Closure class: http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java
-			text = angularPass(text);
 			grunt.file.write(destFile, text);
 		}
 	});

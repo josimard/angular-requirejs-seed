@@ -55,7 +55,7 @@ To wire controllers in this rig it's a piece of cake:
 		$routeProvider.when('path', {templateUrl: 'templates/yeah.html', controller: "MyControl"});
 
 
-- Add the @ngInject build directive comment before controllers constructors using [AngularJS injectables](http://docs.angularjs.org/guide/di).
+- Add the @ngInject build directive comment before controllers constructors.
 
 		/** @ngInject */
 		function MyControl($scope, $http)
@@ -63,49 +63,48 @@ To wire controllers in this rig it's a piece of cake:
 			
 		}
 
-## Understanding the @ngInject build directive
+- Controllers are parsed and registered in [app.js](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/app.js)
 
 
-There is normally two ways to setup AngularJS controllers:
+## Angular.js [Depencency Injection](http://docs.angularjs.org/guide/di) and minification
 
-- _Global scope controllers_ ( like [this one](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/js/controllers/ListControl.js) )
+### The problem
 
-		function MyGlobalScopeControl($scope, $http)
-		{
-				
-		}
-		
-- _Registered controllers_ 
-	
-		angular.module('app').controller('MyController', function($scope, $http){
-		
-		});
+Usually, your favorite minifier will change the attributes names to save space and AngularJS would not understand what to inject anymore, getting you into [trouble like this](http://stackoverflow.com/questions/16242406/angular-js-error-with-providerinjector). 
 
-Usually, when minifying code, your minifier would change the attributes names and AngularJS would not understand what to inject anymore, getting you into [trouble like this](http://stackoverflow.com/questions/16242406/angular-js-error-with-providerinjector).
+### UglifyJS2 angular pass ( @ngInject build directive )
 
-You would then have to end up writing some weird and hard-to-maintain declarations:
+People at Google are clever and came up with [this solution](http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java) for their Closure compiler. Inspired by this solution, a simple angularPass() method is handled in the UglifyJS2 custom task in the [build utilities](https://github.com/pheno7/angular-requirejs-seed/blob/master/scripts/build-utils.js).
 
-		angular.module('app').controller("MyController", ["$scope", "$http", "Service1", "Service2"], function ($scope, $http, Service1, Service2) {
-			// Yeah, right… what this controller name yet?
-		}
-
-People at Google are clever and came up with [this solution](http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java) for their Closure compiler. But what if we prefer using UglifyJS? We can, since we are in control of our build with Grunt! That's why I wired-in a simple angularPass() method in the [build utilities](https://github.com/pheno7/angular-requirejs-seed/blob/master/scripts/build-utils.js), this pass also permit to avoid listing injectable strings with the use of [ng-annotate](https://github.com/olov/ng-annotate).
-
-By adding the @ngInject before your controllers constructors, injection will be automatically added:
+By adding the @ngInject before your controllers constructors, [dependency annotation](http://docs.angularjs.org/guide/di#dependency-annotation) is automatically added:
 
 		/** @ngInject */		
-		function MyController('$scope', '$http'])
+		function MyController($scope, $http)
 		{		
 			
 		}
 
-Once minified with this projet's [grunt file](https://github.com/pheno7/angular-requirejs-seed/blob/master/Gruntfile.js), the previous code will look like this:
+Once [minified](https://github.com/pheno7/angular-requirejs-seed/blob/master/Gruntfile.js), the previous code will not throw errors because $inject annotation will be pre-pended:
 	
 		MyController.$inject = ['$scope', '$http'];		
 		function MyController(a, b)
 		{		
 			// a and b will not throw an error due to $inject
 		}
+
+### What about inline dependency injection?
+
+Normally, you would then have to end up writing some weird and hard-to-maintain declarations called [inline annotations](http://docs.angularjs.org/guide/di#inline-annotation)
+
+		angular.module('app').controller("MyController", ["$scope", "$http", "Service1", "Service2"], function ($scope, $http, Service1, Service2) {
+			// Yeah, right… what this controller name yet?
+		}
+
+Using [ng-annotate](https://github.com/olov/ng-annotate), you can forget about that and use normal directives:
+
+	angular.module('app').controller("MyController", ["$scope", "$http", "Service1", "Service2"], function ($scope, $http, Service1, Service2) {
+		// Yeah, right… what this controller name yet?
+	}
     
 ## What else is in there?
 
