@@ -56,7 +56,7 @@ To wire controllers in this rig it's a piece of cake:
 		$routeProvider.when('path', {templateUrl: 'templates/yeah.html', controller: "MyControl"});
 
 
-- Add the @ngInject build directive comment before controllers constructors.
+- Add the [@ngInject](https://github.com/pheno7/angular-requirejs-seed#nginject-build-directive) build directive comment before controllers constructors.
 
 		/** @ngInject */
 		function MyControl($scope, $http)
