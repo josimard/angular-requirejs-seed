@@ -115,7 +115,6 @@ Good practices for overall productivity, code maintanability, ease-of-debugging 
 
 - _Comments_: preaching commenting your code by example.
 - Localization using the [RequireJS i18n plugin](https://github.com/requirejs/i18n) for it's simplicity, see the [Localization](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/services/Localization.js) module.
-- [Dynamic routing](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/routing.js) to handle more cases, flexibility, route localization and page title changes.
-- A simple [boot](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/boot.js) procedure triggered by RequireJS. 
-- [Normalize.css](http://necolas.github.io/normalize.css/), as included the [HTML5 Boilerplate](http://html5boilerplate.com/)
-- Unit testing should be coming coming soon
+- [Dynamic routing](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/services/Routing.js): to handle more cases, flexibility, route localization and page title changes, etc.
+- A simple ASYNC [boot](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/boot.js) procedure triggered by RequireJS. 
+- [Normalize.css](http://necolas.github.io/normalize.css/)
