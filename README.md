@@ -26,7 +26,7 @@ To install the latest Grunt depencencies
 
 ##Building the project
 
-To generate an optimized build, use Grunt as usual
+To generate an optimized build, [use Grunt](http://gruntjs.com/getting-started) as usual
 
 	$ grunt
 
