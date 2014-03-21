@@ -74,7 +74,7 @@ Usually, your favorite minifier will change the attributes names to save space a
 
 ### UglifyJS2 angular pass ( @ngInject build directive )
 
-People at Google are clever and came up with [this solution](http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java) for their Closure compiler. Inspired by this solution, a simple angularPass() method is handled in the UglifyJS2 custom task in the [build utilities](https://github.com/pheno7/angular-requirejs-seed/blob/master/scripts/build-utils.js).
+People at Google are clever and came up with [this solution](http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java) for their Closure compiler. Inspired by this solution, a simple angularPass() was made. This is handled in the UglifyJS2 custom task of my [build utilities](https://github.com/pheno7/angular-requirejs-seed/blob/master/scripts/build-utils.js).
 
 By adding the @ngInject before your controllers constructors, [dependency annotation](http://docs.angularjs.org/guide/di#dependency-annotation) is automatically added:
 
