@@ -11,6 +11,7 @@ AngularJS + RequireJS HTML5 project example, could easily be used as a boilerpla
 This application demonstrates the freedom you can get while staying organized.
 - Because we don't want to add a script tag for each controller nor manually manage js files, see [config.js](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/config.js).
 - Because the [RequireJS Optimizer](http://requirejs.org/docs/optimization.html) is our friend when it's time to make that build.
+- Because we want to use [UglifyJS2](https://github.com/mishoo/UglifyJS2) and keep injection rules working, without DI annotations.
 
 ##Installation
 
@@ -72,11 +73,13 @@ To wire controllers in this rig it's a piece of cake:
 
 Usually, your favorite minifier will change the attributes names to save space and AngularJS would not understand what to inject anymore, getting you into [trouble like this](http://stackoverflow.com/questions/16242406/angular-js-error-with-providerinjector). 
 
-### UglifyJS2 angular pass ( @ngInject build directive )
+### UglifyJS2 angular pass
 
-People at Google are clever and came up with [this solution](http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java) for their Closure compiler. Inspired by this solution, a simple angularPass() was made. This is handled in the UglifyJS2 custom task of my [build utilities](https://github.com/pheno7/angular-requirejs-seed/blob/master/scripts/build-utils.js).
+People at Google are clever and came up with [this solution](http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java) for their Closure compiler. Inspired by this solution, a simple angularPass() is included. This is handled in the UglifyJS2 custom task of my [build utilities](https://github.com/pheno7/angular-requirejs-seed/blob/master/scripts/build-utils.js).
 
-By adding the @ngInject before your controllers constructors, [dependency annotation](http://docs.angularjs.org/guide/di#dependency-annotation) is automatically added:
+#### @ngInject build directive 
+
+To add [dependency annotation](http://docs.angularjs.org/guide/di#dependency-annotation) automatically, you can flag your controllers contructors by adding the @ngInject directive: 
 
 		/** @ngInject */		
 		function MyController($scope, $http)
@@ -92,26 +95,26 @@ Once [minified](https://github.com/pheno7/angular-requirejs-seed/blob/master/Gru
 			// a and b will not throw an error due to $inject
 		}
 
-### What about inline dependency injection?
+#### Inline dependency injection
 
-Normally, you would then have to end up writing some weird and hard-to-maintain declarations called [inline annotations](http://docs.angularjs.org/guide/di#inline-annotation)
+Normally, you could end up writing some hard-to-maintain declarations called [inline annotations](http://docs.angularjs.org/guide/di#inline-annotation)
 
 		angular.module('app').controller("MyController", ["$scope", "$http", "Service1", "Service2"], function ($scope, $http, Service1, Service2) {
-			// Yeah, right… what this controller name yet?
-		}
+			// Yeah, right… what's this controller name yet?
+		}]);
 
-Using [ng-annotate](https://github.com/olov/ng-annotate), you can forget about that and use normal directives:
+Now you can write normal directives, the build script is making use of [ng-annotate](https://github.com/olov/ng-annotate).
 
-	angular.module('app').controller("MyController", ["$scope", "$http", "Service1", "Service2"], function ($scope, $http, Service1, Service2) {
-		// Yeah, right… what this controller name yet?
-	}
+		angular.module('app').controller("MyController", function ($scope, $http, Service1, Service2) {
+			// Not thats better
+		});
     
 ## What else is in there?
 
 Good practices for overall productivity, code maintanability, ease-of-debugging and most of all keeping it simple as possible but ready for scaling.
 
 - _Comments_: preaching commenting your code by example.
-- Localization using the [RequireJS i18n plugin](https://github.com/requirejs/i18n) for it's simplicity, see the [Localization](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/models/Localization.js) model.
+- Localization using the [RequireJS i18n plugin](https://github.com/requirejs/i18n) for it's simplicity, see the [Localization](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/services/Localization.js) module.
 - [Dynamic routing](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/routing.js) to handle more cases, flexibility, route localization and page title changes.
 - A simple [boot](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/boot.js) procedure triggered by RequireJS. 
 - [Normalize.css](http://necolas.github.io/normalize.css/), as included the [HTML5 Boilerplate](http://html5boilerplate.com/)
