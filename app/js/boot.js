@@ -1,8 +1,18 @@
 // angular.js dependency module
 define('angular', function () {return window.angular;}); 
 
+// Cache busting
+// http://requirejs.org/docs/api.html#config-urlArgs
+var requireCacheBust = ( new Date().getTime() )+"";
+requireCacheBust = "v=" + requireCacheBust.substr(requireCacheBust.length - 4);
+
+// Basic RequireJS config
+requirejs.config({
+	baseUrl:"./",
+	urlArgs:requireCacheBust
+});
+
 // First, let's load configuration file to configure RequireJS
-requirejs.config({baseUrl:"./"});
 requirejs(["js/config"], function (config)
 {
 	"use strict";
@@ -17,12 +27,14 @@ requirejs(["js/config"], function (config)
 
 	// Configure RequireJS
 	config.requirejs.locale = config.locale;
+
+	// Apply Configuration
 	requirejs.config(config.requirejs);
 
 	// Boot procedure (async angular.js bootstrap)
 	requirejs(["js/app"], function (App)
 	{
-		console.log("Booting application...");
+		console.log("Booting "+config.angular.name);
 
 		// Start application 
 		var app = new App(config);
@@ -30,5 +42,5 @@ requirejs(["js/config"], function (config)
 	});
 });
 
-// Make sure IE has a console
+// Make sure IE has a console object
 if (!window.console) console = {log: function() {}};

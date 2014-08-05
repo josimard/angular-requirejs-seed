@@ -1,66 +1,85 @@
 /* 
-* AngularJS + RequireJS HTML5 Application
-* @see https://github.com/pheno7/angular-requirejs-seed
-* @author Jo Simard
+* AngularJS + Require.js Application module with:
+* Routing, Controller Registration and dependency management from a configuration file.
+* 
+* The application must use manual boostrap (https://docs.angularjs.org/guide/bootstrap)
+*
+* Documentation in ../README.md 
+*
+* Project seeded from https://github.com/pheno7/angular-requirejs-seed
+* 
 */
 'use strict';
-define(['angular', "js/services/Localization", "js/services/Routing"], 
-function (angular, Localization, Routing)
+// Module dependencies 
+define(['angular', "js/modules", "js/core/Localization", "js/core/Routing"], 
+function (angular, Modules, Localization, Routing)
 {
 	function App(config)
 	{
-		var context = this;
+		// Save application configuration
+		this.config = config;
 
-		// AngularJS Module - http://docs.angularjs.org/guide/module
-		var module;
-
-		// Localization service
-		var localization;
-
-		// Routing service
-		var routing;
-
-		function init()
-		{
-			module = angular.module(config.angular.name, ['ngRoute']);
-
-			localization = new Localization(module, config, onLocalizationReady);
-		}
-
-		function onLocalizationReady()
-		{
-			// Get all controllers from configuration, AMD or not
-			requirejs(config.angular.controllers, function ()
-			{
-				// Register controllers to application
-				for(var i=0; i<arguments.length; i++)
-				{
-					var controllerName = config.angular.controllers[i];
-					controllerName = controllerName.substring(controllerName.lastIndexOf("/")+1, controllerName.length);
-					if(arguments[i]) module.controller(controllerName, arguments[i]);
-				}
-
-				// Create our Routing service
-				routing = new Routing(module, config);
-
-				onAppReady();
-			});
-		}
-
-		function onAppReady()
-		{
-			// Start angular JS boostrap
-			angular.bootstrap(document.body, [config.angular.name]);
-
-			// Hide the splash screen
-			document.getElementById('splash').style.visibility = 'hidden'; 
-		};
-
-		// Public API
-		context.init = init;
-
-		return context;
+		// Application name (try to get from config.js)
+		this.name = (config.angular && config.angular.name) ? config.angular.name : "app";
 	}
+
+	App.prototype.init = function()
+	{
+		// AngularJS Module - http://docs.angularjs.org/guide/module
+		this.module = angular.module(this.name, [
+			// Angular JS modules
+			'ngRoute',
+			//'ui.router'
+			//'ngAnimate',
+			//'ngTouch'
+		]); 
+
+		// Make application config injectable
+		this.module.service('appConfig', function() {
+			return this.config;
+		});
+
+		// Load localization module first
+		this.localization = new Localization(this.module, this.config, this.onLocalizationReady.bind(this));
+	}
+
+	App.prototype.onLocalizationReady = function()
+	{
+		// Then load application specific modules
+		this.modules = new Modules(this, this.module, this.onModulesReady.bind(this));
+	}
+	
+	App.prototype.onModulesReady = function(modules)
+	{
+		// Then create routing module module, controllers in config.js will be mapped there
+		this.routing = new Routing(this, this.module, this.onRoutingReady.bind(this) );
+	}
+
+	App.prototype.onRoutingReady = function()
+	{	
+		// Finally bootstrap the application
+		this.boostrap();
+	}
+
+
+	/**
+	 * Manual angular.js application boostrap
+	 * @see https://docs.angularjs.org/guide/bootstrap
+	 */
+	App.prototype.boostrap = function()
+	{
+		var elementQuery = this.config.angular.element;
+		
+		this.element = angular.element( document.querySelector(elementQuery) );
+
+		if(!this.element || this.element.length<=0) console.error("Application element not found using query: '"+elementQuery+"'");
+
+		angular.bootstrap(this.element, [this.name]);
+
+		angular.element(this.element).removeClass("on-init");
+
+		console.log("Application boostrap complete");
+	};
 
 	return App;
 });

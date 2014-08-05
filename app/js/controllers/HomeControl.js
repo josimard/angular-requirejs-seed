@@ -1,3 +1,9 @@
+/**
+ * Example module controller
+ *
+ * TODO: All the jQuery code should be wrapped in a Directive or Widget container
+ * 
+ */
 define(["angular", "js/controllers/PageControl"], function (angular, PageControl)
 {
 	/** @ngInject */
@@ -24,7 +30,7 @@ define(["angular", "js/controllers/PageControl"], function (angular, PageControl
 			{
 				// Using https://github.com/thomasklemm/Readme.js
 				jQuery("#Readme").readme({
-					'owner': 'pheno7',
+					'owner': 'josimard',
 					'repo':  'angular-requirejs-seed'
 				});
 			});
@@ -43,7 +49,7 @@ define(["angular", "js/controllers/PageControl"], function (angular, PageControl
 	{
 		if(_LibrariesLoaded) { onComplete(); return; }
 
-		jQuery.getScript( "https://raw.github.com/thomasklemm/Readme.js/master/readme.js", function(script, textStatus, jqXHR){
+		jQuery.getScript( "https://rawgit.com/thomasklemm/Readme.js/master/readme.js", function(script, textStatus, jqXHR){
 			_LibrariesLoaded = true;
 				onComplete();
 		});

@@ -9,7 +9,7 @@ AngularJS + RequireJS HTML5 project example, could easily be used as a boilerpla
 - Because we like browser errors like "syntaxError: missing X on ListControl.js (line 56, col 2)"
 - Because AngularJS is great, but we want to use jQuery plugins and awesome HTML5 libraries.
 This application demonstrates the freedom you can get while staying organized.
-- Because we don't want to add a script tag for each controller nor manually manage js files, see [config.js](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/config.js).
+- Because we don't want to add a script tag for each controller nor manually manage js files, see [config.js](https://github.com/josimard/angular-requirejs-seed/blob/master/app/config.js).
 - Because the [RequireJS Optimizer](http://requirejs.org/docs/optimization.html) is our friend when it's time to make that build.
 - Because we want to use [UglifyJS2](https://github.com/mishoo/UglifyJS2) and keep injection rules working, without DI annotations.
 
@@ -30,16 +30,16 @@ To generate an optimized build, [use Grunt](http://gruntjs.com/getting-started) 
 
 	$ grunt
 
-A "dist" folder will be generated with a minified version of your app/js files and only the necessary dependencies to serve over HTTP. Feel free to modify the [Gruntfile.js](https://github.com/pheno7/angular-requirejs-seed/blob/master/Gruntfile.js) to suit your needs.
+A "dist" folder will be generated with a minified version of your app/js files and only the necessary dependencies to serve over HTTP. Feel free to modify the [Gruntfile.js](https://github.com/josimard/angular-requirejs-seed/blob/master/Gruntfile.js) to suit your needs.
 
-Keep in mind that no build tool or build watcher is necessary to develop and debug your application. Simply open [app/index.html](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/index.html) and experience coding comfort. Thanks to [RequireJS](http://requirejs.org/).
+Keep in mind that no build tool or build watcher is necessary to develop and debug your application. Simply open [app/index.html](https://github.com/josimard/angular-requirejs-seed/blob/master/app/index.html) and experience coding comfort. Thanks to [RequireJS](http://requirejs.org/).
 
 
 ## Wiring AngularJS controllers 
 
 To wire controllers in this rig it's a piece of cake:
 
-- Register it's path in [config.js](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/config.js)
+- Register it's path in [config.js](https://github.com/josimard/angular-requirejs-seed/blob/master/app/config.js)
 
 		angular: {
 			controllers: [
@@ -51,12 +51,12 @@ To wire controllers in this rig it's a piece of cake:
 			]
 		}
 
-- Use a string in your [routes](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/js/services/Routing.js) instead of linking with the functions directly:
+- Use a string in your [routes](https://github.com/josimard/angular-requirejs-seed/blob/master/app/js/services/Routing.js) instead of linking with the functions directly:
 
 		$routeProvider.when('path', {templateUrl: 'templates/yeah.html', controller: "MyControl"});
 
 
-- Add the [@ngInject](https://github.com/pheno7/angular-requirejs-seed#nginject-build-directive) build directive comment before controllers constructors.
+- Add the [@ngInject](https://github.com/josimard/angular-requirejs-seed#nginject-build-directive) build directive comment before controllers constructors.
 
 		/** @ngInject */
 		function MyControl($scope, $http)
@@ -64,7 +64,7 @@ To wire controllers in this rig it's a piece of cake:
 			
 		}
 
-- Controllers are parsed and registered in [app.js](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/app.js)
+- Controllers are parsed and registered in [app.js](https://github.com/josimard/angular-requirejs-seed/blob/master/app/app.js)
 
 
 ## Angular.js [Depencency Injection](http://docs.angularjs.org/guide/di) and minification
@@ -75,7 +75,7 @@ Usually, your favorite minifier will change the attributes names to save space a
 
 ### UglifyJS2 angular pass
 
-People at Google are clever and came up with [this solution](http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java) for their Closure compiler. Inspired by this solution, a simple angularPass() is included. This is handled in the UglifyJS2 custom task of my [build utilities](https://github.com/pheno7/angular-requirejs-seed/blob/master/tools/build-utils.js).
+People at Google are clever and came up with [this solution](http://code.google.com/p/closure-compiler/source/browse/src/com/google/javascript/jscomp/AngularPass.java) for their Closure compiler. Inspired by this solution, a simple angularPass() is included. This is handled in the UglifyJS2 custom task of my [build utilities](https://github.com/josimard/angular-requirejs-seed/blob/master/tools/build-utils.js).
 
 #### @ngInject build directive 
 
@@ -87,7 +87,7 @@ To add [dependency annotation](http://docs.angularjs.org/guide/di#dependency-ann
 			
 		}
 
-Once [minified](https://github.com/pheno7/angular-requirejs-seed/blob/master/Gruntfile.js), the previous code will not throw errors because $inject annotation will be pre-pended:
+Once [minified](https://github.com/josimard/angular-requirejs-seed/blob/master/Gruntfile.js), the previous code will not throw errors because $inject annotation will be pre-pended:
 	
 		MyController.$inject = ['$scope', '$http'];		
 		function MyController(a, b)
@@ -114,7 +114,7 @@ Now you can write normal directives, the build script is making use of [ng-annot
 Good practices for overall productivity, code maintanability, ease-of-debugging and most of all keeping it simple as possible but ready for scaling.
 
 - _Comments_: preaching commenting your code by example.
-- Localization using the [RequireJS i18n plugin](https://github.com/requirejs/i18n) for it's simplicity, see the [Localization](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/js/services/Localization.js) module.
-- [Dynamic routing](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/js/services/Routing.js): to handle more cases, flexibility, route localization and page title changes, etc.
-- A simple ASYNC [boot](https://github.com/pheno7/angular-requirejs-seed/blob/master/app/boot.js) procedure triggered by RequireJS. 
+- Localization using the [RequireJS i18n plugin](https://github.com/requirejs/i18n) for it's simplicity, see the [Localization](https://github.com/josimard/angular-requirejs-seed/blob/master/app/js/services/Localization.js) module.
+- [Dynamic routing](https://github.com/josimard/angular-requirejs-seed/blob/master/app/js/services/Routing.js): to handle more cases, flexibility, route localization and page title changes, etc.
+- A simple ASYNC [boot](https://github.com/josimard/angular-requirejs-seed/blob/master/app/boot.js) procedure triggered by RequireJS. 
 - [Normalize.css](http://necolas.github.io/normalize.css/)

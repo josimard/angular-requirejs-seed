@@ -3,7 +3,8 @@
 * Using the require.js i18n plugin for the sake of simplicity
 *
 * Centralizing your localization in a component reduces your dependency over a single framework and switching system application-wide should prove be easier
-* Another interesting framework: i18next @ http://i18next.com/
+*
+* @see Another interesting framework:  i18next @ http://i18next.com/
 *
 */
 define([], function ()
@@ -22,11 +23,11 @@ define([], function ()
 
 		// i18n plugin init
 		// Get default locales bundle
+		console.log("Loading locales bundle '"+defaultBundle+".js'");
 		requirejs(["i18n!"+defaultBundle], function (i18nLocales)
 		{
 			// Assign merged locales object to singleton
 			context.locales = i18nLocales;
-			
 			onComplete();
 		});
 
@@ -41,6 +42,9 @@ define([], function ()
 				onComplete(i18nLocales);
 			});
 		}
+		
+		// Public methods
+		context.getLocales = getLocales;
 		
 		// Singleton-style component public API
 		return context;
