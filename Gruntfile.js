@@ -41,7 +41,7 @@ module.exports = function(grunt) {
 		var taskList = buildUtils.loadTasks(["requirejs", "uglify", "css", "copy","processHtml", "customize"]);
 
 		// Get the app configuration
-		var requirejs = require('grunt-contrib-requirejs/node_modules/requirejs');
+		var requirejs = require('requirejs');
 		var appConfig = requirejs(buildConfig.baseUrl+"/js/config.js");
 
 		// Modify application config for the RequireJS Optimizer (Inject controller shims, etc. )

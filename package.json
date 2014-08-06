@@ -6,9 +6,10 @@
     "clean-css": "^2.2.12",
     "grunt": "~0.4.4",
     "grunt-contrib-copy": "^0.4.1",
-    "grunt-contrib-requirejs": "~0.4.3",
+    "grunt-contrib-requirejs": "^0.4.4",
     "grunt-processhtml": "^0.3.3",
     "ng-annotate": "^0.4.0",
-    "uglify-js": "~2.4.12"
+    "requirejs": "^2.1.14",
+    "uglify-js": "^2.4.15"
   }
 }
