@@ -13,12 +13,13 @@ define(["angular"], function (angular)
 	{
 		this.onComplete = onComplete;
 
-		// Create application widgets namespace
-		widgets = angular.module(app.name+'.widgets', []);
+		// Create application widgets module (must be required in application)
+		app.widgets = angular.module('app.widgets', []);
 
 		// Load application specific modules/directives/widgets/etc here
 		require([
-
+			"js/widgets/menuWidget",
+			"js/widgets/readmeWidget"
 		], this.onModulesLoaded.bind(this));
 	}
 

@@ -7,6 +7,20 @@ define([], {
 		defaultBundle: "locales"
 	}, 
 
+	// RequireJS configuration
+	requirejs: {
+		name: "js/app",
+		baseUrl:"./",
+		paths:{
+			"i18n":"//cdnjs.cloudflare.com/ajax/libs/require-i18n/2.0.4/i18n",
+			'angular':'empty:'
+		},
+		shim: {
+			"jquery": { exports: "jquery" }
+	    },
+		priority:[]
+	},
+
 	// AngularJS configuration
 	angular: {
 		name: "app",
@@ -17,9 +31,7 @@ define([], {
 			// Define AMD controllers first
 			"js/controllers/PageControl",
 			"js/controllers/HomeControl",
-
-			// Global scope controllers can be used, but must be listed after AMD ones
-			"js/controllers/ListControl"
+			"js/controllers/FeedControl"
 		], 
 
 		// Routing configuration
@@ -31,9 +43,9 @@ define([], {
 			/* ngRoute, handled in core/Routing.js */
 			type:"ngRoute",
 			routes: [
-				{url: '/home', templateUrl: 'assets/templates/home.html', controller: "HomeControl"},
-				{url: '/list/:name', templateUrl: 'assets/templates/list.html', controller: "ListControl"},
-				{url: '/:name', templateUrl: 'assets/templates/page.html', controller: "PageControl"}
+				{url: '/home', templateUrl: 'templates/home.html', controller: "HomeControl"},
+				{url: '/feed/:name', templateUrl: 'templates/feed.html', controller: "FeedControl"},
+				{url: '/:name', templateUrl: 'templates/page.html', controller: "PageControl"}
 			]
 
 			/* ui-router states
@@ -41,19 +53,5 @@ define([], {
 				{name: "intro", url: '/', templateUrl: 'templates/home.html', controller: "IntroControl"}
 			]*/
 		}
-	},
-
-	// RequireJS configuration
-	requirejs: {
-		name: "js/app",
-		baseUrl:"./",
-		paths:{
-			"i18n":"lib/require.i18n",
-			'angular':'empty:'
-		},
-		shim: {
-			"jquery": { exports: "jquery" }
-	    },
-		priority:[]
 	}
 });

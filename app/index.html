@@ -22,35 +22,26 @@
 	</head>
 
 	<body>
-		<div id="wrap" class="rounded-shadow">
+		<div id="app" class="on-init">
+			<div id="wrap" class="rounded-shadow">
 
-			<div id="app" class="on-init">
 				<header>
-					<nav id="mainMenu">
-						<a href="#" class="logo"></a>
-						
-						<!-- Static menu -->
-						<ul class="mainMenu">
-							<li><a class="btn btnHome" href="#/home">Home</a></li>
-							<li><a class="btn btnTestPage" href="#/test">Page</a></li>
-							<li><a class="btn btnTestPage" href="#/adressThatDoesNotPointAnywhereReally">404</a></li>
-							<li><a class="btn btnTest" href="#/list/feed1">List 1</a></li>
-							<li><a class="btn btnTest" href="#/list/feed2">List 2</a></li>
-							<li><a class="btn btnTest" href="#/list/listThatDoesNotExists">List 404</a></li>
-						</ul>
-
-						<div class="clearfix"></div>
-					</nav>
+					<!-- Menu widget directive -->
+					<div menu-widget></div>
 				</header>
 
-				<!-- This will be hidden when the application is loaded -->
-				<section id="splash" class="contentWrap">
+				<!-- This will be hidden from css when the application is loaded -->
+				<section id="splash" class="splash">
 					<!-- You could put SEO indexable content here, some nice graphics nor a loading animation, or use ng-cloak -->
+					Splash content...
 				</section>
 
 				<section id="content" class="contentWrap" ng-view></section>
 
-				<!-- Vendor libraries -->
+				<!-- Loading jQuery for the Readme Widget example only: you can decide if your application needs it or not -->
+				<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+
+				<!-- Angular libraries -->
 				<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.js"></script>
 				<script src="//code.angularjs.org/1.3.0-beta.17/angular-resource.js"></script>
 
@@ -58,19 +49,19 @@
 				<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script> -->
 				<script src="//code.angularjs.org/1.3.0-beta.17/angular-route.js"></script>
 
-				<!-- Loading jQuery for the example code in js/controllers only: you can decide if your application needs it or not -->
-				<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 
+				<!-- http://requirejs.org/  -->
+				<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js"></script>
 
-				<!-- http://requirejs.org/ - will run boot.js -->
-				<script data-main="js/boot" src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js"></script>
+				<!-- Run the application boot script, a separate one for mobile could be used if needed -->
+				<script src="js/boot.js"></script>
 
-			</div><!-- /#app -->
-		</div><!-- /#wrap -->
+			</div><!-- /#wrap -->
 
-		<footer>
-			That's one happy footer.
-		</footer>
+			<!-- make sure the ng-includes urls are wrapped into single quotes -->
+			<div id="footer" ng-include="'templates/footer.html'"></div>
 
+		</div><!-- /#app -->
+	
 	</body>
 </html>

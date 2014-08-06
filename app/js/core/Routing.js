@@ -40,6 +40,9 @@ function (angular)
 
 	Routing.prototype.init = function()
 	{
+		// Templates cache busting - https://gist.github.com/ecowden/4637806
+		this.cacheBustSuffix = Date.now();
+		
 		if(this.settings.type == "ngRoute")
 		{
 			this.initNgRoutes();
@@ -75,6 +78,11 @@ function (angular)
 				for(var i=0; i<routes.length; i++)
 				{
 					var routeData = routes[i];
+
+					if(context.cacheBustSuffix && routeData.templateUrl)
+					{
+						routeData.templateUrl = routeData.templateUrl + "?v=" + context.cacheBustSuffix;
+					}
 
 					console.log("Registering route '" +routeData.url+"'", routeData);
 
@@ -130,7 +138,7 @@ function (angular)
 
 	Routing.prototype.get404url = function(referer)
 	{
-		var url = routePrefix+"404";
+		var url = this.settings.prefix+"404";
 		if(referer) url+= "?r="+referer;
 		return url;
 	}
@@ -145,12 +153,12 @@ function (angular)
 	}
 	
 	Routing.prototype.setDefaultTitle = function() {
-		return pageTitle(this.defaultTitle);
+		return this.pageTitle(this.defaultTitle);
 	}
 
 	Routing.prototype.show404 = function(referer)
 	{
-		context.location.url( get404url(referer) );
+		this.location.url( this.get404url(referer) );
 	}
 
 	return Routing;

@@ -11,8 +11,8 @@
 */
 'use strict';
 // Module dependencies 
-define(['angular', "js/modules", "js/core/Localization", "js/core/Routing"], 
-function (angular, Modules, Localization, Routing)
+define(['angular', "js/core/Routing", "js/services/Localization", "js/modules"], 
+function (angular, Routing, Localization, Modules)
 {
 	function App(config)
 	{
@@ -25,8 +25,11 @@ function (angular, Modules, Localization, Routing)
 
 	App.prototype.init = function()
 	{
-		// AngularJS Module - http://docs.angularjs.org/guide/module
+		// Create application module and require other modules dependencies - http://docs.angularjs.org/guide/module
 		this.module = angular.module(this.name, [
+			// Local modules
+			"app.widgets",
+
 			// Angular JS modules
 			'ngRoute',
 			//'ui.router'
@@ -35,12 +38,13 @@ function (angular, Modules, Localization, Routing)
 		]); 
 
 		// Make application config injectable
-		this.module.service('appConfig', function() {
-			return this.config;
-		});
+		this.module.service('appConfig', function() { return this.config; });
 
 		// Load localization module first
-		this.localization = new Localization(this.module, this.config, this.onLocalizationReady.bind(this));
+		var localization = this.localization = new Localization(this.module, this.config, this.onLocalizationReady.bind(this));
+
+		// Register the localization module as a service (singleton)
+		this.module.service('Localization', function() {return localization;});
 	}
 
 	App.prototype.onLocalizationReady = function()
@@ -77,6 +81,7 @@ function (angular, Modules, Localization, Routing)
 		angular.bootstrap(this.element, [this.name]);
 
 		angular.element(this.element).removeClass("on-init");
+		angular.element(this.element).addClass("loaded");
 
 		console.log("Application boostrap complete");
 	};

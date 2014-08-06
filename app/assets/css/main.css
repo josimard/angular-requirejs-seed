@@ -8,9 +8,21 @@ body{
 
 #wrap {
     max-width: 960px;
+    min-height:400px;
     margin:0 auto;
 }
 
+/* Splash */
+.splash {
+    position: absolute;
+    padding:20px;
+}
+    .on-init .splash {
+        opacity: 1;
+    }
+    .loaded .splash {
+        opacity: 0;
+    }
 
 /*-------------------------
   Header Styles
