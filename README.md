@@ -22,7 +22,7 @@ A first-time installation is necessary to get [Grunt](http://gruntjs.com/) and i
 To install the latest Grunt depencencies
   
     $ npm install grunt-cli -g
-    $ npm update --save
+    $ npm update --save-dev
 
 ##Building the project
 
