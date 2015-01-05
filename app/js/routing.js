@@ -38,36 +38,28 @@ define(["angular", "js/utils/AngularUtils"], function (angular, AngularUtils)
 		// Register states
 		this.angularModule.config(function($stateProvider, $urlRouterProvider)
 		{
-			// For any unmatched url, redirect to /state1
+			// For any unmatched url, redirect to home (could be a 404 page)
   			$urlRouterProvider.otherwise(context.config.home);
 
-  			/* You can still set states here:
+  			/* You can always set states here, but it's far more convenient to define them in config.js
   			$stateProvider.state('home', {
 				url: "/home",
 				templateUrl: "templates/home.html"
 			});*/
 
 			/* config.js states */
-			var states = context.config.states;
-			if(states!=null)
+			var statesConfig = context.config.states;
+			if(statesConfig!=null)
 			{
-				for (var i = 0; i < states.length; i++) {
-					var stateConfig = states[i];
+				for (var i = 0; i < statesConfig.length; i++){
+					var state = statesConfig[i];
 
-					// Adapt template url if necessary
-					if(stateConfig.templateUrl) stateConfig.templateUrl = context.getTemplateUrl(stateConfig.templateUrl);
+					// Adapt template url if necessary?
+					if(state.templateUrl) state.templateUrl = context.getTemplateUrl(state.templateUrl);
 
-					console.log("state:",stateConfig);
+					console.log("state:",state);
 
-					$stateProvider.state(stateConfig.name, {
-						url: stateConfig.url,
-						templateUrl: stateConfig.templateUrl,
-						controller: stateConfig.controller
-					});
-
-					// TODO: Support named views
-					// https://github.com/angular-ui/ui-router#multiple--named-views
-					
+					$stateProvider.state(state.name, state);
 				};	
 			}
 		});	
@@ -78,12 +70,13 @@ define(["angular", "js/utils/AngularUtils"], function (angular, AngularUtils)
 	// Public methods
 	Routing.prototype.getTemplateUrl = function(templateUrl)
 	{
+		// Replace template baseUrl?
 		if(this.config.templatesBase)
 		{
 			templateUrl = templateUrl.replace('{{baseUrl}}', this.config.templatesBase);
 		}
 		
-		// Cache-busting templates suffix
+		// Cache-busting templates suffix?
 		if(this.cacheBustSuffix)
 		{
 			templateUrl = templateUrl + "?v=" + this.cacheBustSuffix;

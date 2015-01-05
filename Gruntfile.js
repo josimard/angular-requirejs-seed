@@ -124,7 +124,6 @@ module.exports = function(grunt) {
 					// http://gruntjs.com/configuring-tasks#building-the-files-object-dynamically
 					files: [
 						{expand: true, src: ['./app/index.html'], dest: buildConfig.dest},
-						{expand: true, src: ['./app/templates/**'], dest: buildConfig.dest},
 
 						// JS
 						{expand: true, src: [buildConfig.js.dest], dest: buildConfig.dest},
@@ -136,9 +135,7 @@ module.exports = function(grunt) {
 								'./app/lib/**',
 								// Except:
 								"!./app/lib/angular/**",
-								"!./app/lib/plugins/**",
-								"!./app/lib/createjs/**",
-								"!./app/lib/greensock/**"
+								"!./app/lib/plugins/**"
 							], dest: buildConfig.dest},
 
 						// Assets
@@ -146,10 +143,7 @@ module.exports = function(grunt) {
 								'./app/assets/**', 
 								// Except:
 								'!*.less',
-								"!./app/assets/images/sprites/**",
-								"!./app/assets/images/loader/**",
-								"!./app/assets/images/anim/frames/**",
-								"!./app/assets/images/anim/zoe/**"
+								"!./app/assets/images/sprites/**"
 							], dest: buildConfig.dest}
 					]
 				}
