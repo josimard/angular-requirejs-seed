@@ -51,7 +51,7 @@ To wire controllers in this rig it's a piece of cake:
 			]
 		}
 
-- Use a string in your [routes](https://github.com/josimard/angular-requirejs-seed/blob/master/app/js/core/Routing.js) instead of linking with the functions directly:
+- Use a string in your [routes](https://github.com/josimard/angular-requirejs-seed/blob/master/app/js/routing.js) instead of linking with the functions directly:
 
 		$routeProvider.when('path', {templateUrl: 'templates/yeah.html', controller: "MyControl"});
 
@@ -64,7 +64,7 @@ To wire controllers in this rig it's a piece of cake:
 			
 		}
 
-- Controllers from the config.js are parsed and registered in [Routing.js](https://github.com/josimard/angular-requirejs-seed/blob/master/app/js/core/Routing.js)
+- Controllers from the config.js are parsed and registered in [Routing.js](https://github.com/josimard/angular-requirejs-seed/blob/master/app/js/routing.js)
 
 
 ## Angular.js [Depencency Injection](http://docs.angularjs.org/guide/di) and minification
@@ -111,10 +111,9 @@ Now you can write normal directives, the build script is making use of [ng-annot
     
 ## What else is in there?
 
-Good practices for overall productivity, code maintanability, ease-of-debugging and most of all keeping it simple as possible but ready for scaling.
+Good practices for overall productivity, code maintanability, ease-of-debugging and most of all keeping it simple as possible, but ready for scaling.
 
-- _Comments_: preaching commenting your code by example.
-- Localization using the [RequireJS i18n plugin](https://github.com/requirejs/i18n) for it's simplicity, see the [Localization](https://github.com/josimard/angular-requirejs-seed/blob/master/app/js/services/Localization.js) module.
-- [Dynamic routing](https://github.com/josimard/angular-requirejs-seed/blob/master/app/js/core/Routing.js): to handle more cases, flexibility, route localization and page title changes, etc.
+- _Comments_: commenting code by example.
+- Simple localization using the [RequireJS i18n plugin](https://github.com/requirejs/i18n) for it's simplicity, see the [Localization](https://github.com/josimard/angular-requirejs-seed/blob/master/app/js/services/Localization.js) module.
 - A simple ASYNC [boot](https://github.com/josimard/angular-requirejs-seed/blob/master/app/boot.js) procedure. 
 - [Normalize.css](http://necolas.github.io/normalize.css/)
