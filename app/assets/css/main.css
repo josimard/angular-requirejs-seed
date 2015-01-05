@@ -1,5 +1,12 @@
+/**
+ * Example CSS file, you can of course use Stylus, LESS, etc..
+ * @see http://learnboost.github.io/stylus/
+ */
+
+@import url("normalize.min.css");
+
 html{
-  min-width: 960px;
+  
 }
 
 body{
@@ -7,7 +14,6 @@ body{
 }
 
 #wrap {
-    max-width: 960px;
     min-height:400px;
     margin:0 auto;
 }
@@ -17,11 +23,9 @@ body{
     position: absolute;
     padding:20px;
 }
-    .on-init .splash {
-        opacity: 1;
-    }
+
     .loaded .splash {
-        opacity: 0;
+        display:none;
     }
 
 /*-------------------------
@@ -39,25 +43,22 @@ header NAV {
 }
 
 header .logo {
-    width: 250px;
-    height: 100px;
+    float:left; width: 250px; height: 100px;
     margin: 5px 0 0 0;
-    float:left;
     background: url(../images/angular+require.png) 0 0 no-repeat;
     background-size: auto 100%;
-    overflow: hidden;
-    text-indent: -1000px;
+    overflow: hidden; text-indent: -1000px;
 }
 
-#mainMenu 
+#mainMenu
 {
     padding: 0 0 0 30px;
 }
 
-    #mainMenu h1{
+    #mainMenu h1 {
         float:left;
-      text-align: left;
-      font-weight: bold;
+        text-align: left;
+        font-weight: bold;
         margin:0;
         padding: 20px 0 0 0;
     }
@@ -73,33 +74,10 @@ header .logo {
         float:left;
         margin:0 10px 0 0;
     }
-    
-    #mainMenu ul LI A {
-        font-size:16px;
-    }
-
-    #mainMenu a.btn {
-        color:#5F5F5F;
-        padding:10px 20px;
-        display:inline-block;
-        text-align: center;
-        border-radius:10px;
-        background: #E6E6E6  no-repeat 10px center;
-        box-shadow:0 0 4px rgba(0,0,0,0.3) inset,0 -3px 2px rgba(0,0,0,0.1);
-        
-    }
-
-    #mainMenu a.btn:hover{
-        color:#fff;
-        text-decoration: none;
-        background: #5F5F5F no-repeat 10px center;
-    }
-
 
 
 footer
 {
-    max-width: 960px;
     margin: 0 auto;
     padding: 20px 0 20px 0;
     display:block;
@@ -114,17 +92,16 @@ footer
     padding: 30px;
 }
 
+.page.list .item h2 {
+
+}
 .page.list .item {
-    padding:20px;
-    margin: 10px 0 0 0;
+    
 }
 
 /*-------------------------
     Generic Styles
 --------------------------*/
-
-.ie-only { display:none; }
-.ie .ie-only { display:block; }
 
 a, a:visited {
     text-decoration:none;
@@ -151,57 +128,4 @@ ul.centeredMenu LI {
     right: 50%;
     float:left;
     margin: 0 10px 0 0;
-}
-
-
-
-/*-------------------------
-  MISC
---------------------------*/
-
-
-.transition {
-  -webkit-transition: all 0.1s ease-out;
-  -moz-transition: all 0.1s ease-out;
-  -ms-transition: all 0.1s ease-out;
-  -o-transition: all 0.1s ease-out;
-  transition: all 0.1s ease-out;
-}
-
-.rounded-shadow
-{
-    border-radius:10px;
-    box-shadow:0 0 4px rgba(0,0,0,0.3) inset,0 -3px 2px rgba(0,0,0,0.1);
-}
-
-
-/*
- * Clearfix: contain floats
- *
- * For modern browsers
- * 1. The space content is one way to avoid an Opera bug when the
- *    `contenteditable` attribute is included anywhere else in the document.
- *    Otherwise it causes space to appear at the top and bottom of elements
- *    that receive the `clearfix` class.
- * 2. The use of `table` rather than `block` is only necessary if using
- *    `:before` to contain the top-margins of child elements.
- */
-
-.clearfix:before,
-.clearfix:after {
-    content: " "; /* 1 */
-    display: table; /* 2 */
-}
-
-.clearfix:after {
-    clear: both;
-}
-
-/*
- * For IE 6/7 only
- * Include this rule to trigger hasLayout and contain floats.
- */
-
-.clearfix {
-    *zoom: 1;
 }

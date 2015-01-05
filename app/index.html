@@ -17,13 +17,12 @@
 		<meta name="viewport" content="initial-scale=1.0, width=device-width" />
 
 		<!-- CSS -->
-		<link rel="stylesheet" href="assets/css/normalize.css" />
         <link rel="stylesheet" href="assets/css/main.css" />
 	</head>
 
 	<body>
-		<div id="app" class="on-init">
-			<div id="wrap" class="rounded-shadow">
+		<div id="app" ng-controller="AppControl as appControl" class="on-init">
+			<div id="wrap" class="container">
 
 				<header>
 					<!-- Menu widget directive -->
@@ -36,32 +35,32 @@
 					Splash content...
 				</section>
 
-				<section id="content" class="contentWrap" ng-view></section>
+				<section id="content" class="contentWrap" ui-view>
+				</section>
 
 				<!-- Loading jQuery for the Readme Widget example only: you can decide if your application needs it or not -->
 				<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
 
 				<!-- Angular libraries -->
-				<script src="//ajax.googleapis.com/ajax/libs/angularjs/1.3.0-beta.17/angular.js"></script>
-				<script src="//code.angularjs.org/1.3.0-beta.17/angular-resource.js"></script>
-
-				<!-- Either use ng-rouge for simple or ui-router
-				<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.min.js"></script> -->
-				<script src="//code.angularjs.org/1.3.0-beta.17/angular-route.js"></script>
+				<script src="//code.angularjs.org/1.3.8/angular.js"></script>
+				<script src="//code.angularjs.org/1.3.8/angular-resource.js"></script>
+				<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.js"></script>
 
 				<!-- http://requirejs.org/  -->
 				<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js"></script>
 
 				<!-- Run the application boot script, a separate one for mobile could be used if needed -->
-
 				<!-- build:[debug]:dist false -->
 				<script id="bootScript" src="js/boot.js" data-debug="true"></script>
 				<!-- /build -->
 
 			</div><!-- /#wrap -->
 
-			<!-- make sure the ng-includes urls are wrapped into single quotes -->
-			<div id="footer" ng-include="'templates/footer.html'"></div>
+			<!-- Ng-include example: make sure the ng-includes urls are wrapped into single quotes: -->
+			<div id="footer" class="container" ng-include="'assets/partials/footer.html'"></div>
+
+			<!-- Optional bootstrap CSS -->
+			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
 		</div><!-- /#app -->
 	

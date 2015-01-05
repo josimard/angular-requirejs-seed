@@ -26,6 +26,13 @@ define( {
 		"content_ie": '<p>Using Internet Explorer on page will not display this page content since this defies the purpose of this example. I wish that your were using IE only for testing purposes...</p>'
 	},
 
+	"menu": {
+		"home": "Home",
+		"test": "Page",
+		"feed1": "Feed 1",
+		"feed2": "Feed 2"
+	},
+
 	"test": {
 		"title": "Test page",
 		"content": '<p>Hello!</p>'

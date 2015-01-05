@@ -11,8 +11,8 @@
 */
 'use strict';
 // Module dependencies 
-define(['angular', "js/core/Routing", "js/services/Localization", "js/modules"], 
-function (angular, Routing, Localization, Modules)
+define(['angular', "js/utils/AngularUtils", "js/routing", "js/services/Localization", "js/modules", "js/controllers/AppControl"], 
+function (angular, AngularUtils, Routing, Localization, Modules, AppControl)
 {
 	function App(config)
 	{
@@ -25,52 +25,60 @@ function (angular, Routing, Localization, Modules)
 
 	App.prototype.init = function()
 	{
+		var context = this;
+
 		// Create application module and require other modules dependencies - http://docs.angularjs.org/guide/module
 		this.module = angular.module(this.name, [
 			// Local modules
 			"app.widgets",
 
 			// Angular JS modules
-			'ngRoute',
-			//'ui.router'
+			'ui.router'
 			//'ngAnimate',
 			//'ngTouch'
 		]); 
 
-		// Make application config injectable
-		this.module.service('appConfig', function() { return this.config; });
-
+		// Register main application controllers (other controllers are registred in core/Routing.js)
+		this.module.controller("AppControl", AppControl);
+		
 		// Load localization module first
-		var localization = this.localization = new Localization(this.module, this.config, this.onLocalizationReady.bind(this));
+		this.localization = new Localization(this.module, this.config, this.onLocalizationReady.bind(this));
 
-		// Register the localization module as a service (singleton)
-		this.module.service('Localization', function() {return localization;});
+		// Register modules as services (singleton access)
+		this.module.service('AppConfig', function() {return context.config;});
+		this.module.service('Localization', function() {return context.localization;});
+		this.module.service('Routing', function() {return context.routing;});
 	}
 
 	App.prototype.onLocalizationReady = function()
 	{
-		// Then load application specific modules
-		this.modules = new Modules(this, this.module, this.onModulesReady.bind(this));
+		// Load controllers from configuration?
+		AngularUtils.loadControllers(this.module, this.config.angular.controllers, this.onControllersLoaded.bind(this));
 	}
-	
-	App.prototype.onModulesReady = function(modules)
+
+	App.prototype.onControllersLoaded = function()
 	{
 		// Then create routing module module, controllers in config.js will be mapped there
-		this.routing = new Routing(this, this.module, this.onRoutingReady.bind(this) );
+		this.routing = new Routing(this.config, this.module, this.onRoutingReady.bind(this) );
+	}
+	
+	App.prototype.onRoutingReady = function(modules)
+	{
+		// Then load application specific modules
+		this.modules = new Modules(this.config, this.module, this.onModulesReady.bind(this));
 	}
 
-	App.prototype.onRoutingReady = function()
+	App.prototype.onModulesReady = function()
 	{	
 		// Finally bootstrap the application
-		this.boostrap();
+		this.bootstrap();
 	}
-
 
 	/**
 	 * Manual angular.js application boostrap
 	 * @see https://docs.angularjs.org/guide/bootstrap
 	 */
-	App.prototype.boostrap = function()
+	App.prototype.bootstrap = function()
 	{
 		var elementQuery = this.config.angular.element;
 		

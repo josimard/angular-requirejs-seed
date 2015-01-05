@@ -13,7 +13,7 @@ define(["angular"], function (angular)
 	var locales;
 
 	// http://docs.angularjs.org/guide/directive
-	module.directive('menuWidget', function() {
+	module.directive('menuWidget', function(Routing) {
 		return {
 			// Restrict to attribute only
 			restrict: 'A',
@@ -22,7 +22,7 @@ define(["angular"], function (angular)
 			//scope: {eventSources:'=ngModel'},
 			
 			// You can also define a template for your widgets when needed
-			templateUrl: 'templates/menuWidget.html',
+			templateUrl: Routing.getTemplateUrl('{{baseUrl}}/menu.html'),
 
 			// In-line controller
 			controller: function($scope, $timeout, Localization){

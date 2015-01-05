@@ -9,12 +9,12 @@
 */
 define(["angular"], function (angular)
 {
-	function Modules(app, angularModule, onComplete)
+	function Modules(appConfig, angularModule, onComplete)
 	{
 		this.onComplete = onComplete;
 
 		// Create application widgets module (must be required in application)
-		app.widgets = angular.module('app.widgets', []);
+		this.widgets = angular.module('app.widgets', []);
 
 		// Load application specific modules/directives/widgets/etc here
 		require([

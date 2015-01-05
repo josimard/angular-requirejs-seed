@@ -32,26 +32,22 @@ define([], {
 			"js/controllers/PageControl",
 			"js/controllers/HomeControl",
 			"js/controllers/FeedControl"
-		], 
+		],
 
-		// Routing configuration
+		// Routing configuration, see routing.js for implementation
 		routing: {
+			templatesBase:"assets/partials", // Templates base url to replace {{baseUrl}} token
+			assetsUrl:"",
 			prefix:"/",
 			home:"/home",
 			not_found:"/404",
 
-			/* ngRoute, handled in core/Routing.js */
-			type:"ngRoute",
-			routes: [
-				{url: '/home', templateUrl: 'templates/home.html', controller: "HomeControl"},
-				{url: '/feed/:name', templateUrl: 'templates/feed.html', controller: "FeedControl"},
-				{url: '/:name', templateUrl: 'templates/page.html', controller: "PageControl"}
-			]
-
-			/* ui-router states
+			/* ui-router states */
 			states: [
-				{name: "intro", url: '/', templateUrl: 'templates/home.html', controller: "IntroControl"}
-			]*/
+				{ name: "home", url: '/home', templateUrl: '{{baseUrl}}/home.html', controller: "HomeControl"},
+				{ name: "test", url: '/test', templateUrl: '{{baseUrl}}/page.html', controller: "PageControl"},
+				{ name: "feed", url: '/feed/:name', templateUrl: '{{baseUrl}}/feed.html', controller: "FeedControl"},
+			]
 		}
 	}
 });
