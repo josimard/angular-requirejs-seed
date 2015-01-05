@@ -115,5 +115,5 @@ Good practices for overall productivity, code maintanability, ease-of-debugging 
 
 - _Comments_: commenting code by example.
 - Simple localization using the [RequireJS i18n plugin](https://github.com/requirejs/i18n) for it's simplicity, see the [Localization](https://github.com/josimard/angular-requirejs-seed/blob/master/app/js/services/Localization.js) module.
-- A simple ASYNC [boot](https://github.com/josimard/angular-requirejs-seed/blob/master/app/boot.js) procedure. 
+- A simple ASYNC [boot](https://github.com/josimard/angular-requirejs-seed/blob/master/app/js/boot.js) procedure. 
 - [Normalize.css](http://necolas.github.io/normalize.css/)
