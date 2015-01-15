@@ -9,9 +9,14 @@
 * Project seeded from https://github.com/pheno7/angular-requirejs-seed
 * 
 */
-'use strict';
-// Module dependencies 
-define(['angular', "js/utils/AngularUtils", "js/routing", "js/services/Localization", "js/modules", "js/controllers/AppControl"], 
+define([
+	'angular',
+	"js/utils/AngularUtils",
+	"js/routing",
+	"js/services/Localization",
+	"js/modules",
+	"js/controllers/AppControl"
+], 
 function (angular, AngularUtils, Routing, Localization, Modules, AppControl)
 {
 	function App(config)

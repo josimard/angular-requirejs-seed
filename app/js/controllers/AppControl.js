@@ -1,7 +1,8 @@
 /**
  * Main Application controller
  */
-define(["angular", "js/utils/AngularUtils"], function (angular, AngularUtils)
+define(["angular", "js/utils/AngularUtils"],
+function (angular, AngularUtils)
 {
 	/** @ngInject */
 	function AppControl($scope, $location, $interpolate, Localization, AppConfig)

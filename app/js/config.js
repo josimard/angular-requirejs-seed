@@ -2,25 +2,6 @@
 define([], {
 	version:"0.1",
 
-	localization: {
-		path: "assets/nls",
-		defaultBundle: "locales"
-	}, 
-
-	// RequireJS configuration
-	requirejs: {
-		name: "js/app",
-		baseUrl:"./",
-		paths:{
-			"i18n":"//cdnjs.cloudflare.com/ajax/libs/require-i18n/2.0.4/i18n",
-			'angular':'empty:'
-		},
-		shim: {
-			"jquery": { exports: "jquery" }
-	    },
-		priority:[]
-	},
-
 	// AngularJS configuration
 	angular: {
 		name: "app",
@@ -49,5 +30,25 @@ define([], {
 				{ name: "feed", url: '/feed/:name', templateUrl: '{{baseUrl}}/feed.html', controller: "FeedControl"},
 			]
 		}
+	},
+
+	// Localization configuration (see Localization.js)
+	localization: {
+		path: "assets/nls",
+		defaultBundle: "locales"
+	}, 
+
+	// RequireJS configuration
+	requirejs: {
+		name: "js/app",
+		baseUrl:"./",
+		paths:{
+			"i18n":"//cdnjs.cloudflare.com/ajax/libs/require-i18n/2.0.4/i18n",
+			'angular':'empty:'
+		},
+		shim: {
+			"jquery": { exports: "jquery" }
+	    },
+		priority:[]
 	}
 });
