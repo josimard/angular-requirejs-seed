@@ -1,32 +1,30 @@
 /**
-* Example menu widget
-* A widget is a controller-directive combo
+* Example menu widget (a controller-directive combo)
 * 
-* Note: Widgets are self-registering but must be loaded in modules.js
+* Note: Widgets are loaded in modules.js
 */
 define(["angular"], function (angular)
 {
 	// Get the widget's module
 	var module = angular.module('app.widgets');
 
-	// Static scope
-	var locales;
-
 	// http://docs.angularjs.org/guide/directive
-	module.directive('menuWidget', function(Routing) {
+	module.directive('menuWidget', function(Routing, Localization) {
 		return {
 			// Restrict to attribute only
 			restrict: 'A',
 
-			// Using parent scope
-			//scope: {eventSources:'=ngModel'},
+			// Creating it's own scope
+			scope: {
+				model: '=', // This will bind the attribute references to this scope, see 'model' attribute in index.html
+			},
 			
 			// You can also define a template for your widgets when needed
 			templateUrl: Routing.getTemplateUrl('{{baseUrl}}/menu.html'),
 
 			// In-line controller
-			controller: function($scope, $timeout, Localization){
-				locales = Localization.locales;
+			controller: function($scope){
+				
 			},
 
 			// This method is called when binding the directive to the DIV element of the parent template

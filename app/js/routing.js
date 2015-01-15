@@ -1,8 +1,7 @@
 /**
-* Application routing component and AngularJS service to:
-* - configure angular routes
-* - handle route localization
-* - set page title, etc.
+* Application routing service
+*
+* Routes are defined in config.js
 * 
 * Using Angular UI router:
 * https://github.com/angular-ui/ui-router
@@ -41,13 +40,14 @@ define(["angular", "js/utils/AngularUtils"], function (angular, AngularUtils)
 			// For any unmatched url, redirect to home (could be a 404 page)
   			$urlRouterProvider.otherwise(context.config.home);
 
-  			/* You can always set states here, but it's far more convenient to define them in config.js
-  			$stateProvider.state('home', {
+  			// You can set states custom states here:
+  			
+  			/*$stateProvider.state('home', {
 				url: "/home",
 				templateUrl: "templates/home.html"
 			});*/
 
-			/* config.js states */
+			// config.js routing states
 			var statesConfig = context.config.states;
 			if(statesConfig!=null)
 			{

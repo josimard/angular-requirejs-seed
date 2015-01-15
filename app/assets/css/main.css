@@ -5,8 +5,12 @@
 
 @import url("normalize.min.css");
 
+/* OPTIONAL - Boostrap css */
+@import url("https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css");
+
+
 html{
-  
+  min-height: 100%;
 }
 
 body{
@@ -18,18 +22,33 @@ body{
     margin:0 auto;
 }
 
-/* Splash */
-.splash {
+/*-------------------------
+  Splash screen
+--------------------------*/
+
+#splash {
     position: absolute;
-    padding:20px;
+    top:0;
+    left:0;
+    margin: 0 auto;
+    display: table;
+    height: 100%;
+    width:100%;
 }
 
-    .loaded .splash {
+    #splash .splash-content {
+        display:table-cell;
+        vertical-align: middle;
+        text-align: center;
+        padding:20px;
+    }
+
+    .loaded #splash {
         display:none;
     }
 
 /*-------------------------
-  Header Styles
+  Header
 --------------------------*/
 
 header {
@@ -76,13 +95,6 @@ header .logo {
     }
 
 
-footer
-{
-    margin: 0 auto;
-    padding: 20px 0 20px 0;
-    display:block;
-    text-align: center;
-}
 
 /*-------------------------
     Content
@@ -92,11 +104,17 @@ footer
     padding: 30px;
 }
 
-.page.list .item h2 {
 
-}
-.page.list .item {
-    
+/*-------------------------
+    Footer
+--------------------------*/
+
+footer
+{
+    margin: 0 auto;
+    padding: 20px 0 20px 0;
+    display:block;
+    text-align: center;
 }
 
 /*-------------------------

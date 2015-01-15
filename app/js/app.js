@@ -52,11 +52,18 @@ function (angular, AngularUtils, Routing, Localization, Modules, AppControl)
 
 	App.prototype.onLocalizationReady = function()
 	{
-		// Load controllers from configuration?
-		AngularUtils.loadControllers(this.module, this.config.angular.controllers, this.onControllersLoaded.bind(this));
+		this.loadControllers();
 	}
 
-	App.prototype.onControllersLoaded = function()
+	/**
+	 * Load application controllers using Require.js and config.js
+	 */
+	App.prototype.loadControllers = function()
+	{
+		AngularUtils.loadControllers(this.module, this.config.angular.controllers, this.onControllersComplete.bind(this));
+	}
+
+	App.prototype.onControllersComplete = function()
 	{
 		// Then create routing module module, controllers in config.js will be mapped there
 		this.routing = new Routing(this.config, this.module, this.onRoutingReady.bind(this) );

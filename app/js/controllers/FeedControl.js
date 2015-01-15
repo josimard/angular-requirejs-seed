@@ -1,12 +1,13 @@
 /**
- * Example controller that loads JSONP feeds and show them in a template
+ * Example controller that loads RSS Feeds via the Google Feed API in JSONP
+ *
+ * @see https://developers.google.com/feed/v1/
  */
 define(["angular"], function (angular)
 {
 	// Static settings
-	var Settings = {
-		// Base service url
-		serviceUrl:"http://ajax.googleapis.com/ajax/services/feed/load?callback=JSON_CALLBACK&hl=ja&output=json-in-script&v=1.0&num=10&q=",
+	var FeedSettings = {
+		feedApiUrl:"http://ajax.googleapis.com/ajax/services/feed/load?callback=JSON_CALLBACK&hl=ja&output=json-in-script&v=1.0&num=10&q=",
 
 		// Feeds example for list sources
 		feeds: {
@@ -18,34 +19,26 @@ define(["angular"], function (angular)
 	/** @ngInject */
 	function FeedControl($scope, $http, $state, Routing, Localization)
 	{
+		var name = $state.current.name;
+		var locales = Localization.locales.list;
+		var feedName = $state.params.name;;
+
+		// Keep a reference of injected instances
 		this.routing = Routing;
 
-		// instance settings
-		this.settings = Settings;
-
-		// Create/get model
+		// Scope model
 		$scope.model = this.model = {
 			// Set name from url param
-			name: $state.current.name,
-			locales: Localization.locales.list,
+			name: name,
+			locales: locales,
 			params: $state.params,
 			// For example, you can set initial title to "loading..." until feed is ready
 			title: Localization.locales.loading.title
 		};
 
-		// RSS feed example to populate the item list
-		var feedName = $state.params.name;
-		var feedUrl = this.settings.feeds[feedName];
-		// Feed not found, redirect to 404
-		if(!feedUrl)
-		{
-			// TODO: 404
-			console.log("Feed not found");
-			//Routing.show404();
-			return;
-		}
-
-		this.load($http, this.settings.serviceUrl+feedUrl);
+		// JSONP RSS feed example to populate the item list
+		var feedUrl = FeedSettings.feedApiUrl+FeedSettings.feeds[feedName];
+		this.load($http, feedUrl);
 	}
 
 	FeedControl.prototype.load = function($http, url)
@@ -56,8 +49,8 @@ define(["angular"], function (angular)
 		success(this.onFeedLoaded.bind(this)).
 		error(function(data, status, headers, config)
 		{
-			// called asynchronously if an error occurs
-			// or server returns response with an error status.
+			// called asynchronously if an error occurs or server returns response with an error status.
+			console.error(status, data, url);
 		});
 	}
 
@@ -66,8 +59,6 @@ define(["angular"], function (angular)
 	 */
 	FeedControl.prototype.onFeedLoaded = function(response, status, headers, config)
 	{
-		console.log(response);
-
 		var data = response.responseData;
 
 		if(data.feed)

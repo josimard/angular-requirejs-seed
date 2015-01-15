@@ -26,28 +26,29 @@
 
 				<header>
 					<!-- Menu widget directive -->
-					<div menu-widget></div>
+					<div menu-widget model="locales.menu"></div>
 				</header>
 
 				<!-- This will be hidden from css when the application is loaded -->
 				<section id="splash" class="splash">
 					<!-- You could put SEO indexable content here, some nice graphics nor a loading animation, or use ng-cloak -->
-					Splash content...
+					<div class="splash-content">Loading...</div>
 				</section>
 
 				<section id="content" class="contentWrap" ui-view>
 				</section>
 
-				<!-- Loading jQuery for the Readme Widget example only: you can decide if your application needs it or not -->
-				<script src="//code.jquery.com/jquery-2.1.1.min.js"></script>
+				<!-- jQuery is Optional! only for readmeWidget.js -->
+				<script src="//code.jquery.com/jquery-2.1.3.min.js"></script>
+				<script src="https://rawgit.com/thomasklemm/Readme.js/master/readme.js"></script>
 
 				<!-- Angular libraries -->
-				<script src="//code.angularjs.org/1.3.8/angular.js"></script>
-				<script src="//code.angularjs.org/1.3.8/angular-resource.js"></script>
+				<script src="//code.angularjs.org/1.3.9/angular.js"></script>
+				<script src="//code.angularjs.org/1.3.9/angular-resource.js"></script>
 				<script src="//cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.13/angular-ui-router.js"></script>
 
 				<!-- http://requirejs.org/  -->
-				<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.14/require.min.js"></script>
+				<script src="//cdnjs.cloudflare.com/ajax/libs/require.js/2.1.15/require.min.js"></script>
 
 				<!-- Run the application boot script, a separate one for mobile could be used if needed -->
 				<!-- build:[debug]:dist false -->
@@ -58,9 +59,6 @@
 
 			<!-- Ng-include example: make sure the ng-includes urls are wrapped into single quotes: -->
 			<div id="footer" class="container" ng-include="'assets/partials/footer.html'"></div>
-
-			<!-- Optional bootstrap CSS -->
-			<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
 
 		</div><!-- /#app -->
 	
